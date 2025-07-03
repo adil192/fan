@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fan/data/fan_state.dart';
+import 'package:fan/data/tint_matrix.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
@@ -22,6 +23,7 @@ class _AnimatedFanState extends State<AnimatedFan> {
 
   @override
   Widget build(BuildContext context) {
+    game.fanColor = ColorScheme.of(context).primary;
     return FittedBox(
       alignment: Alignment.bottomCenter,
       child: SizedBox(
@@ -38,16 +40,27 @@ class _FanGame extends FlameGame {
 
   final FanState fanState;
 
+  late final _fan = _FanComponent(fanState);
+
+  Color get fanColor => _fanColor;
+  Color _fanColor = Colors.black;
+  set fanColor(Color fanColor) {
+    if (_fanColor == fanColor) return;
+    _fanColor = fanColor;
+    _fan.updateColorFilter(_fanColor);
+  }
+
   @override
   Future<void> onLoad() async {
-    add(_FanComponent(fanState));
+    add(_fan);
   }
 
   @override
   Color backgroundColor() => Colors.transparent;
 }
 
-class _FanComponent extends SpriteAnimationComponent {
+class _FanComponent extends SpriteAnimationComponent
+    with HasGameReference<_FanGame> {
   _FanComponent(this.fanState)
     : super(
         size: _gameSize.toVector2(),
@@ -73,5 +86,10 @@ class _FanComponent extends SpriteAnimationComponent {
       ]),
       stepTime: 1 / 10,
     );
+    updateColorFilter(game.fanColor);
+  }
+
+  void updateColorFilter(Color fanColor) {
+    paint.colorFilter = ColorFilter.matrix(getTintMatrix(fanColor));
   }
 }
