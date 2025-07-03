@@ -1,11 +1,16 @@
 import 'package:fan/components/themed_app.dart';
+import 'package:fan/data/fan_noise_player.dart';
 import 'package:fan/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await fanNoisePlayer.init();
+
   _addLicenses();
   runApp(const MyApp());
 }

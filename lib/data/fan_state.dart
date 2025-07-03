@@ -1,6 +1,11 @@
+import 'package:fan/data/fan_noise_player.dart';
 import 'package:flutter/material.dart';
 
 class FanState extends ChangeNotifier {
+  FanState() {
+    addListener(() => fanNoisePlayer.update(evaluate()));
+  }
+
   bool get isOn => _isOn;
   bool _isOn = false;
   set isOn(bool isOn) {

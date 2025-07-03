@@ -13,6 +13,14 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   flame: ^1.30.0
+
+  just_audio: ^0.10.4
+  just_audio_media_kit: ^2.1.0
+  media_kit:
+  media_kit_libs_audio:
+  media_kit_libs_linux:
+  media_kit_libs_windows_audio:
+
   material_symbols_icons: ^4.2815.1
   stow_plain: ^0.4.0
   stow_codecs: ^1.2.0+1
@@ -27,4 +35,5 @@ flutter:
   uses-material-design: true
   
   assets:
+    - assets/audio/
     - assets/images/fan-assets/

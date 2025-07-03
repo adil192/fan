@@ -1,16 +1,21 @@
-# fan
+# Fan
 
-A new Flutter project.
+A fan noise app built with Flutter.
 
-## Getting Started
+## Building
 
-This project is a starting point for a Flutter application.
+1. Install Flutter and update to the beta channel:
+   ```bash
+   flutter channel beta
+   flutter upgrade
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Run `./scripts/scripts/get-assets.sh` to download the sprite assets.
+   If you are not me, you won't have access to this repo.
+   You can download the assets from https://gamedeveloperstudio.itch.io/animated-electric-fans-game-asset-pack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Install the dependencies with one of the following:
+   ```bash
+   sudo apt install libmpv-dev
+   sudo dnf install mpv-devel
+   ```
