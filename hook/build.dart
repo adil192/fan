@@ -5,7 +5,7 @@ import 'package:native_assets_cli/native_assets_cli.dart';
 
 void main(List<String> args) async {
   await build(args, (input, output) async {
-    const assetsRelPath = 'assets/fan-assets/';
+    const assetsRelPath = 'assets/images/fan-assets/';
     final assetsSrcUri = input.packageRoot.resolve(assetsRelPath);
     final assetsSrcDir = Directory.fromUri(assetsSrcUri);
 

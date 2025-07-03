@@ -5,10 +5,10 @@ if [ ! -f "pubspec.yaml" ]; then
     exit 2
 fi
 
-if [ -d "assets/fan-assets" ] && [ "$(ls -A assets/fan-assets)" ]; then
+if [ -d "assets/images/fan-assets" ] && [ "$(ls -A assets/images/fan-assets)" ]; then
     echo "✔ Fan assets found."
 else
     echo "⚠ Fan assets missing! Cloning from repository..."
-    git clone https://github.com/adil192/fan-assets.git assets/fan-assets
+    git clone https://github.com/adil192/fan-assets.git assets/images/fan-assets
     exit $?
 fi
