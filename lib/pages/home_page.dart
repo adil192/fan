@@ -1,4 +1,5 @@
 import 'package:fan/components/animated_fan.dart';
+import 'package:fan/components/fan_controls.dart';
 import 'package:fan/data/fan_state.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,10 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Expanded(child: AnimatedFan(fanState: fanState)),
-          Text('hi'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+            child: FanControls(fanState: fanState),
+          ),
         ],
       ),
     );

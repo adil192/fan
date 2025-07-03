@@ -9,7 +9,7 @@ class ThemedApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Colors.deepOrange;
+    final primaryColor = Color(0xFFFF2F00);
 
     switch (Theme.of(context).platform) {
       case TargetPlatform.iOS:
