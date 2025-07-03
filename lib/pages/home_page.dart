@@ -15,8 +15,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Fan')),
-      body: Center(child: AnimatedFan(fanState: fanState)),
+      body: Column(
+        children: [
+          Expanded(child: AnimatedFan(fanState: fanState)),
+          Text('hi'),
+        ],
+      ),
     );
   }
 }

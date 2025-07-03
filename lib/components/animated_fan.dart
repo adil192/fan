@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fan/data/fan_state.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
@@ -21,7 +23,7 @@ class _AnimatedFanState extends State<AnimatedFan> {
   @override
   Widget build(BuildContext context) {
     return FittedBox(
-      alignment: Alignment.centerRight,
+      alignment: Alignment.bottomCenter,
       child: SizedBox(
         width: _gameSize.width,
         height: _gameSize.height,
@@ -46,7 +48,14 @@ class _FanGame extends FlameGame {
 }
 
 class _FanComponent extends SpriteAnimationComponent {
-  _FanComponent(this.fanState) : super(size: _gameSize.toVector2());
+  _FanComponent(this.fanState)
+    : super(
+        size: _gameSize.toVector2(),
+        paint: Paint()..filterQuality = FilterQuality.medium,
+        anchor: Anchor.center,
+        position: _gameSize.toVector2() / 2,
+        angle: pi / 2, // face up
+      );
 
   final FanState fanState;
 
@@ -54,15 +63,15 @@ class _FanComponent extends SpriteAnimationComponent {
   Future<void> onLoad() async {
     animation = SpriteAnimation.spriteList(
       await Future.wait([
-        Sprite.load('fan-assets/fan_head_with_cover_with_tassles_01.png'),
-        Sprite.load('fan-assets/fan_head_with_cover_with_tassles_02.png'),
-        Sprite.load('fan-assets/fan_head_with_cover_with_tassles_03.png'),
-        Sprite.load('fan-assets/fan_head_with_cover_with_tassles_04.png'),
-        Sprite.load('fan-assets/fan_head_with_cover_with_tassles_05.png'),
-        // Sprite.load('fan-assets/fan_head_with_cover_with_tassles_off.png'),
+        Sprite.load('fan-assets/fan_head_no_cover_01.png'),
+        Sprite.load('fan-assets/fan_head_no_cover_02.png'),
+        Sprite.load('fan-assets/fan_head_no_cover_03.png'),
+        Sprite.load('fan-assets/fan_head_no_cover_04.png'),
+        Sprite.load('fan-assets/fan_head_no_cover_05.png'),
+        Sprite.load('fan-assets/fan_head_no_cover_06.png'),
+        // Sprite.load('fan-assets/fan_head_no_cover_off.png'),
       ]),
       stepTime: 1 / 10,
     );
-    paint = Paint()..filterQuality = FilterQuality.medium;
   }
 }
