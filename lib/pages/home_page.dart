@@ -17,15 +17,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const ThemePicker(),
-          Expanded(child: AnimatedFan(fanState: fanState)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
-            child: FanControls(fanState: fanState),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const ThemePicker(),
+            Expanded(child: AnimatedFan(fanState: fanState)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+              child: FanControls(fanState: fanState),
+            ),
+          ],
+        ),
       ),
     );
   }
