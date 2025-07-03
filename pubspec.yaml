@@ -6,16 +6,19 @@ version: 1.0.0+1
 
 environment:
   sdk: ^3.8.1
+  flutter: ^3.34.0-0.1.pre
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  flame: ^1.30.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
+  native_assets_cli: ^0.18.0
 
 flutter:
   uses-material-design: true
