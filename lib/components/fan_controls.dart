@@ -39,7 +39,10 @@ class FanControls extends StatelessWidget {
                     child: fanState.isOn
                         ? IconButton.filled(
                             onPressed: () => fanState.isOn = false,
-                            icon: const Icon(Symbols.mode_fan),
+                            icon: const Icon(
+                              Symbols.mode_fan,
+                              semanticLabel: 'Turn off fan',
+                            ),
                             style: IconButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(32),
@@ -48,7 +51,10 @@ class FanControls extends StatelessWidget {
                           )
                         : IconButton.filledTonal(
                             onPressed: () => fanState.isOn = true,
-                            icon: const Icon(Symbols.mode_fan_off),
+                            icon: const Icon(
+                              Symbols.mode_fan_off,
+                              semanticLabel: 'Turn on fan',
+                            ),
                           ),
                   ),
                   Flexible(

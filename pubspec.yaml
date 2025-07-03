@@ -14,6 +14,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flame: ^1.30.0
   material_symbols_icons: ^4.2815.1
+  stow_plain: ^0.4.0
+  stow_codecs: ^1.2.0+1
 
 dev_dependencies:
   flutter_test:

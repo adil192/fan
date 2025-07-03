@@ -12,6 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ThemedApp(title: 'Fan', home: const HomePage());
+    return const ThemedApp(title: 'Fan', home: HomePage());
   }
 }

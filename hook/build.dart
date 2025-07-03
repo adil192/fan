@@ -12,7 +12,9 @@ void main(List<String> args) async {
     if (!assetsSrcDir.existsSync()) {
       throw PathNotFoundException(
         assetsSrcDir.path,
-        OSError('⚠ Fan assets missing, please run `./scripts/get-assets.sh`'),
+        const OSError(
+          '⚠ Fan assets missing, please run `./scripts/get-assets.sh`',
+        ),
       );
     }
   });
