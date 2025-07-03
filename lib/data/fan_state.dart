@@ -9,11 +9,23 @@ class FanState extends ChangeNotifier {
     notifyListeners();
   }
 
-  double get speed => _speed;
-  double _speed = 0.0;
-  set speed(double speed) {
+  /// The fan's speed when it is on.
+  ///
+  /// This value does not change when the fan is turned on/off.
+  /// If the fan is off, this value is ignored.
+  FanStateEnum get speed => _speed;
+  FanStateEnum _speed = FanStateEnum.low;
+  set speed(FanStateEnum speed) {
     if (_speed == speed) return;
+    assert(speed != FanStateEnum.off, 'Cannot set speed to off');
     _speed = speed;
     notifyListeners();
   }
+
+  FanStateEnum evaluate() {
+    if (!isOn) return FanStateEnum.off;
+    return speed;
+  }
 }
+
+enum FanStateEnum { off, low, medium, high }

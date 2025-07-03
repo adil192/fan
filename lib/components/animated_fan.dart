@@ -59,10 +59,11 @@ class _FanGame extends FlameGame {
   Color backgroundColor() => Colors.transparent;
 }
 
-class _FanComponent extends SpriteAnimationComponent
+class _FanComponent extends SpriteAnimationGroupComponent<FanStateEnum>
     with HasGameReference<_FanGame> {
   _FanComponent(this.fanState)
     : super(
+        current: FanStateEnum.off,
         size: _gameSize.toVector2(),
         paint: Paint()..filterQuality = FilterQuality.medium,
         anchor: Anchor.center,
@@ -74,19 +75,46 @@ class _FanComponent extends SpriteAnimationComponent
 
   @override
   Future<void> onLoad() async {
-    animation = SpriteAnimation.spriteList(
-      await Future.wait([
-        Sprite.load('fan-assets/fan_head_no_cover_01.png'),
-        Sprite.load('fan-assets/fan_head_no_cover_02.png'),
-        Sprite.load('fan-assets/fan_head_no_cover_03.png'),
-        Sprite.load('fan-assets/fan_head_no_cover_04.png'),
-        Sprite.load('fan-assets/fan_head_no_cover_05.png'),
-        Sprite.load('fan-assets/fan_head_no_cover_06.png'),
-        // Sprite.load('fan-assets/fan_head_no_cover_off.png'),
-      ]),
-      stepTime: 1 / 10,
-    );
+    final fanOnSpriteList = await Future.wait([
+      Sprite.load('fan-assets/fan_head_no_cover_01.png'),
+      Sprite.load('fan-assets/fan_head_no_cover_02.png'),
+      Sprite.load('fan-assets/fan_head_no_cover_03.png'),
+      Sprite.load('fan-assets/fan_head_no_cover_04.png'),
+      Sprite.load('fan-assets/fan_head_no_cover_05.png'),
+      Sprite.load('fan-assets/fan_head_no_cover_06.png'),
+    ]);
+    final fanOffSpriteList = await Future.wait([
+      Sprite.load('fan-assets/fan_head_no_cover_off.png'),
+    ]);
+
+    animations = {
+      FanStateEnum.off: SpriteAnimation.spriteList(
+        fanOffSpriteList,
+        stepTime: 1 / 10,
+      ),
+      FanStateEnum.low: SpriteAnimation.spriteList(
+        fanOnSpriteList,
+        stepTime: 1 / 5,
+      ),
+      FanStateEnum.medium: SpriteAnimation.spriteList(
+        fanOnSpriteList,
+        stepTime: 1 / 10,
+      ),
+      FanStateEnum.high: SpriteAnimation.spriteList(
+        fanOnSpriteList,
+        stepTime: 1 / 20,
+      ),
+    };
+
     updateColorFilter(game.fanColor);
+  }
+
+  @override
+  void update(double dt) {
+    final newState = fanState.evaluate();
+    if (current != newState) current = newState;
+
+    super.update(dt);
   }
 
   void updateColorFilter(Color fanColor) {
