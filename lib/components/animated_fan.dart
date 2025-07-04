@@ -76,8 +76,19 @@ class _FanComponent extends PositionComponent {
 
   @override
   void update(double dt) {
-    // TODO(adil192): Rotate here
+    elapsed = (elapsed + dt) % period;
+    angle = _calculateAngle(elapsed);
     super.update(dt);
+  }
+
+  /// The time it takes for the fan to turn left, right, and return to center.
+  static const period = 14;
+  var elapsed = 0.0;
+
+  double _calculateAngle(double elapsed) {
+    const maxAngle = pi / 4;
+    final t = sin(elapsed / period * (2 * pi));
+    return maxAngle * t;
   }
 }
 
