@@ -19,7 +19,7 @@ class FanNoisePlayer {
     JustAudioMediaKit.ensureInitialized();
 
     duration =
-        await player.setAsset('assets/audio/fan_loop.ogg') ??
+        await player.setAsset('assets/audio/fan_loop.m4a') ??
         const Duration(seconds: 57);
 
     _isLoaded = true;
