@@ -47,20 +47,20 @@ class _ThemePickerButtonState extends State<ThemePickerButton> {
 
     return Theme(
       data: theme,
-      child: ElevatedButton(
-        onPressed: () => stows.accentColor.value = widget.accent.color,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: active
-              ? theme.colorScheme.primary
-              : theme.colorScheme.secondary.withValues(alpha: 0.7),
-          shape: RoundedRectangleBorder(
-            borderRadius: active
-                ? BorderRadius.circular(height / 8)
-                : BorderRadius.circular(height / 2),
+      child: Tooltip(
+        message: 'Set theme to ${widget.accent.name}',
+        child: ElevatedButton(
+          onPressed: () => stows.accentColor.value = widget.accent.color,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: active
+                ? theme.colorScheme.primary
+                : theme.colorScheme.secondary.withValues(alpha: 0.7),
+            shape: RoundedRectangleBorder(
+              borderRadius: active
+                  ? BorderRadius.circular(height / 8)
+                  : BorderRadius.circular(height / 2),
+            ),
           ),
-        ),
-        child: Semantics(
-          label: 'Set theme to ${widget.accent.name}',
           child: const SizedBox(width: double.infinity, height: height),
         ),
       ),
