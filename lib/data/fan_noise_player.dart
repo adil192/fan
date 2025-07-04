@@ -9,7 +9,9 @@ final fanNoisePlayer = FanNoisePlayer();
 
 @visibleForTesting
 class FanNoisePlayer {
-  late final player = AudioPlayer()..setLoopMode(LoopMode.one);
+  late final player = AudioPlayer()
+    ..setLoopMode(LoopMode.one)
+    ..setVolume(0);
   late final Duration duration;
 
   bool get isLoaded => _isLoaded;
@@ -28,12 +30,6 @@ class FanNoisePlayer {
   void update(FanStateEnum state) {
     if (!isLoaded) return;
 
-    if (state == FanStateEnum.off) {
-      _pause();
-    } else {
-      _play();
-    }
-
     player.setPitch(switch (state) {
       FanStateEnum.off || FanStateEnum.low => 0.8,
       FanStateEnum.medium => 1.0,
@@ -44,6 +40,12 @@ class FanNoisePlayer {
       FanStateEnum.medium => 1.0,
       FanStateEnum.high => 1.2,
     });
+
+    if (state == FanStateEnum.off) {
+      _pause();
+    } else {
+      _play();
+    }
   }
 
   void _play() {
@@ -58,7 +60,7 @@ class FanNoisePlayer {
   void _fadeToVolume(
     double targetVolume, [
     Duration duration = const Duration(seconds: 1),
-    int steps = 2000,
+    int steps = 120,
   ]) {
     assert(
       targetVolume >= 0.0 && targetVolume <= 1.0,
@@ -68,7 +70,6 @@ class FanNoisePlayer {
     if (player.volume == targetVolume) return;
 
     final increment = (targetVolume - player.volume) / steps;
-    player.play();
 
     _volumeTimer?.cancel();
     _volumeTimer = Timer.periodic(duration ~/ steps, (_) {
@@ -87,5 +88,7 @@ class FanNoisePlayer {
         player.play();
       }
     });
+
+    player.play();
   }
 }
