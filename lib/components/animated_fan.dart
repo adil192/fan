@@ -92,11 +92,11 @@ class _FanComponent extends PositionComponent {
   }
 }
 
-class _FanSprite extends SpriteAnimationGroupComponent<FanStateEnum>
+class _FanSprite extends SpriteAnimationGroupComponent<_FanSpriteAnimation>
     with HasGameReference<_FanGame> {
   _FanSprite(this.fanState)
     : super(
-        current: FanStateEnum.off,
+        current: _FanSpriteAnimation.off,
         size: Vector2(_gameSize.height, _gameSize.width), // swapped bc rotated
         paint: Paint()..filterQuality = FilterQuality.medium,
         angle: pi / 2, // face up
@@ -121,19 +121,19 @@ class _FanSprite extends SpriteAnimationGroupComponent<FanStateEnum>
     ]);
 
     animations = {
-      FanStateEnum.off: SpriteAnimation.spriteList(
+      _FanSpriteAnimation.off: SpriteAnimation.spriteList(
         fanOffSpriteList,
         stepTime: 1 / 10,
       ),
-      FanStateEnum.low: SpriteAnimation.spriteList(
+      _FanSpriteAnimation.low: SpriteAnimation.spriteList(
         fanOnSpriteList,
         stepTime: 1 / 5,
       ),
-      FanStateEnum.medium: SpriteAnimation.spriteList(
+      _FanSpriteAnimation.medium: SpriteAnimation.spriteList(
         fanOnSpriteList,
         stepTime: 1 / 10,
       ),
-      FanStateEnum.high: SpriteAnimation.spriteList(
+      _FanSpriteAnimation.high: SpriteAnimation.spriteList(
         fanOnSpriteList,
         stepTime: 1 / 20,
       ),
@@ -144,13 +144,30 @@ class _FanSprite extends SpriteAnimationGroupComponent<FanStateEnum>
 
   @override
   void update(double dt) {
-    final newState = fanState.evaluate();
-    if (current != newState) current = newState;
-
+    _updateCurrentAnimation();
     super.update(dt);
+  }
+
+  void _updateCurrentAnimation() {
+    final _FanSpriteAnimation animation;
+    if (!fanState.isOn) {
+      animation = _FanSpriteAnimation.off;
+    } else {
+      animation = switch (fanState.speed) {
+        FanSpeed.low => _FanSpriteAnimation.low,
+        FanSpeed.medium => _FanSpriteAnimation.medium,
+        FanSpeed.high => _FanSpriteAnimation.high,
+      };
+    }
+
+    if (current != animation) {
+      current = animation;
+    }
   }
 
   void updateColorFilter(Color fanColor) {
     paint.colorFilter = ColorFilter.matrix(getTintMatrix(fanColor));
   }
 }
+
+enum _FanSpriteAnimation { off, low, medium, high }

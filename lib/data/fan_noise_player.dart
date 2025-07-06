@@ -27,24 +27,26 @@ class FanNoisePlayer {
     _isLoaded = true;
   }
 
-  void update(FanStateEnum state) {
+  void update(FanState state) {
     if (!isLoaded) return;
 
     player.setPitch(switch (state) {
-      FanStateEnum.off || FanStateEnum.low => 0.8,
-      FanStateEnum.medium => 1.0,
-      FanStateEnum.high => 1.2,
+      FanState(isOn: false) => 0.8,
+      FanState(speed: FanSpeed.low) => 0.8,
+      FanState(speed: FanSpeed.medium) => 1.0,
+      FanState(speed: FanSpeed.high) => 1.2,
     });
     player.setSpeed(switch (state) {
-      FanStateEnum.off || FanStateEnum.low => 0.8,
-      FanStateEnum.medium => 1.0,
-      FanStateEnum.high => 1.2,
+      FanState(isOn: false) => 0.8,
+      FanState(speed: FanSpeed.low) => 0.8,
+      FanState(speed: FanSpeed.medium) => 1.0,
+      FanState(speed: FanSpeed.high) => 1.2,
     });
 
-    if (state == FanStateEnum.off) {
-      _pause();
-    } else {
+    if (state.isOn) {
       _play();
+    } else {
+      _pause();
     }
   }
 
