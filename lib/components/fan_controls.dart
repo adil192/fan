@@ -21,9 +21,10 @@ class FanControls extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: _FanControlsButton(
-                    onPressed: () {},
-                    active: false,
-                    icon: const Icon(Icons.abc),
+                    onPressed: () => fanState.oscillate = !fanState.oscillate,
+                    active: fanState.oscillate,
+                    tooltip: 'Oscillate',
+                    icon: const Icon(Icons.threesixty),
                   ),
                 ),
                 Expanded(
@@ -46,6 +47,7 @@ class FanControls extends StatelessWidget {
                       FanSpeed.high => FanSpeed.low,
                     },
                     active: fanState.isOn,
+                    tooltip: 'Fan speed',
                     icon: Text(switch (fanState.speed) {
                       FanSpeed.low => '1',
                       FanSpeed.medium => '2',
@@ -79,6 +81,7 @@ class _FanControlsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = TextStyle(
       fontSize: 32,
+      fontWeight: FontWeight.w500,
       color: active
           ? ColorScheme.of(context).onPrimary
           : ColorScheme.of(context).onSecondaryContainer,

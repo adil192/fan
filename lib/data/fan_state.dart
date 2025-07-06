@@ -21,6 +21,14 @@ class FanState extends ChangeNotifier {
     _speed = speed;
     notifyListeners();
   }
+
+  bool get oscillate => _oscillate;
+  bool _oscillate = false;
+  set oscillate(bool oscillate) {
+    if (_oscillate == oscillate) return;
+    _oscillate = oscillate;
+    notifyListeners();
+  }
 }
 
 enum FanSpeed { low, medium, high }
