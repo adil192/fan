@@ -13,7 +13,7 @@ class ThemePicker extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        spacing: min(12, MediaQuery.widthOf(context) * 0.01),
+        spacing: min(12, MediaQuery.sizeOf(context).width * 0.01),
         children: [
           for (final accent in Accent.values)
             ListenableBuilder(
