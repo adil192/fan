@@ -1,10 +1,11 @@
-import 'package:fan/data/fan_noise_player.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
+final fanState = FanState._();
+
 class FanState extends ChangeNotifier {
-  FanState() {
-    addListener(() => fanNoisePlayer.update(this));
-  }
+  FanState._();
 
   bool get isOn => _isOn;
   bool _isOn = false;
@@ -29,6 +30,9 @@ class FanState extends ChangeNotifier {
     _oscillate = oscillate;
     notifyListeners();
   }
+
+  final angle = ValueNotifier(0.0);
+  static const maxAngle = pi / 4;
 }
 
 enum FanSpeed { low, medium, high }

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class FanControls extends StatelessWidget {
-  const FanControls({super.key, required this.fanState});
-
-  final FanState fanState;
+  const FanControls({super.key});
 
   @override
   Widget build(BuildContext context) {

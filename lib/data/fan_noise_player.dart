@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:fan/data/fan_state.dart';
 import 'package:flutter/material.dart';
@@ -24,26 +25,29 @@ class FanNoisePlayer {
         await player.setAsset('assets/audio/fan_loop.m4a') ??
         const Duration(seconds: 57);
 
+    fanState.addListener(_update);
+    fanState.angle.addListener(_update);
+
     _isLoaded = true;
   }
 
-  void update(FanState state) {
+  void _update() {
     if (!isLoaded) return;
 
-    player.setPitch(switch (state) {
+    player.setPitch(switch (fanState) {
       FanState(isOn: false) => 0.8,
       FanState(speed: FanSpeed.low) => 0.8,
       FanState(speed: FanSpeed.medium) => 1.0,
       FanState(speed: FanSpeed.high) => 1.2,
     });
-    player.setSpeed(switch (state) {
+    player.setSpeed(switch (fanState) {
       FanState(isOn: false) => 0.8,
       FanState(speed: FanSpeed.low) => 0.8,
       FanState(speed: FanSpeed.medium) => 1.0,
       FanState(speed: FanSpeed.high) => 1.2,
     });
 
-    if (state.isOn) {
+    if (fanState.isOn) {
       _play();
     } else {
       _pause();
@@ -51,7 +55,12 @@ class FanNoisePlayer {
   }
 
   void _play() {
-    _fadeToVolume(1);
+    final targetVolume = lerpDouble(
+      0.4,
+      1.0,
+      1 - fanState.angle.value.abs() / FanState.maxAngle,
+    )!;
+    _fadeToVolume(targetVolume);
   }
 
   void _pause() {
@@ -59,6 +68,7 @@ class FanNoisePlayer {
   }
 
   Timer? _volumeTimer;
+  bool get isFadingVolume => _volumeTimer?.isActive ?? false;
   void _fadeToVolume(
     double targetVolume, [
     Duration duration = const Duration(seconds: 1),
@@ -66,7 +76,7 @@ class FanNoisePlayer {
   ]) {
     assert(
       targetVolume >= 0.0 && targetVolume <= 1.0,
-      'targetVolume must be between 0.0 and 1.0',
+      'targetVolume must be between 0.0 and 1.0, got $targetVolume',
     );
     assert(isLoaded, 'Player must be loaded before fading volume');
     if (player.volume == targetVolume) return;

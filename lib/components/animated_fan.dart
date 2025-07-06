@@ -10,16 +10,14 @@ import 'package:flutter/material.dart';
 const _gameSize = Size(1219, 1230);
 
 class AnimatedFan extends StatefulWidget {
-  const AnimatedFan({super.key, required this.fanState});
-
-  final FanState fanState;
+  const AnimatedFan({super.key});
 
   @override
   State<AnimatedFan> createState() => _AnimatedFanState();
 }
 
 class _AnimatedFanState extends State<AnimatedFan> {
-  late final game = _FanGame(widget.fanState);
+  late final game = _FanGame();
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +36,6 @@ class _AnimatedFanState extends State<AnimatedFan> {
 }
 
 class _FanGame extends FlameGame {
-  _FanGame(this.fanState);
-
-  final FanState fanState;
-
-  late final _fan = _FanComponent(fanState);
-
   Color get fanColor => _fanColor;
   Color _fanColor = Colors.black;
   set fanColor(Color fanColor) {
@@ -51,6 +43,8 @@ class _FanGame extends FlameGame {
     _fanColor = fanColor;
     _fan.sprite.updateColorFilter(_fanColor);
   }
+
+  late final _fan = _FanComponent();
 
   @override
   Future<void> onLoad() async {
@@ -62,7 +56,7 @@ class _FanGame extends FlameGame {
 }
 
 class _FanComponent extends PositionComponent {
-  _FanComponent(this.fanState)
+  _FanComponent()
     : super(
         size: _gameSize.toVector2(),
         anchor: const Anchor(0.5, 0.8),
@@ -71,13 +65,15 @@ class _FanComponent extends PositionComponent {
     add(sprite);
   }
 
-  final FanState fanState;
   late final sprite = _FanSprite(fanState);
 
   @override
   void update(double dt) {
-    elapsed = (elapsed + dt) % period;
-    angle = _calculateAngle(elapsed);
+    if (fanState.oscillate) {
+      _oscillate(dt);
+    } else {
+      _returnToCenter(dt);
+    }
     super.update(dt);
   }
 
@@ -85,10 +81,39 @@ class _FanComponent extends PositionComponent {
   static const period = 14;
   var elapsed = 0.0;
 
+  void _oscillate(double dt) {
+    if (!fanState.isOn) return; // can't move if fan is off
+
+    elapsed = (elapsed + dt) % period;
+    angle = _calculateAngle(elapsed);
+  }
+
   double _calculateAngle(double elapsed) {
-    const maxAngle = pi / 4;
     final t = sin(elapsed / period * (2 * pi));
-    return maxAngle * t;
+    return FanState.maxAngle * t;
+  }
+
+  void _returnToCenter(double dt) {
+    if (!fanState.isOn) return; // can't move if fan is off
+
+    if (-0.01 < angle && angle < 0.01) {
+      angle = 0;
+      return;
+    } else {
+      // oscillate back to center
+      final startAngleSign = angle.sign;
+      _oscillate(dt);
+      if (angle.sign != startAngleSign) {
+        // overshot center, so reset angle to 0
+        angle = 0;
+      }
+    }
+  }
+
+  @override
+  set angle(double angle) {
+    fanState.angle.value = angle;
+    super.angle = angle;
   }
 }
 
