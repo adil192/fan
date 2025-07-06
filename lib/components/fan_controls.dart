@@ -40,9 +40,17 @@ class FanControls extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: _FanControlsButton(
-                    onPressed: () {},
-                    active: false,
-                    icon: const Icon(Icons.abc),
+                    onPressed: () => fanState.speed = switch (fanState.speed) {
+                      FanSpeed.low => FanSpeed.medium,
+                      FanSpeed.medium => FanSpeed.high,
+                      FanSpeed.high => FanSpeed.low,
+                    },
+                    active: fanState.isOn,
+                    icon: Text(switch (fanState.speed) {
+                      FanSpeed.low => '1',
+                      FanSpeed.medium => '2',
+                      FanSpeed.high => '3',
+                    }),
                   ),
                 ),
               ],
@@ -69,27 +77,36 @@ class _FanControlsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return active
-        ? IconButton.filled(
-            onPressed: onPressed,
-            style: IconButton.styleFrom(
-              iconSize: 48,
-              minimumSize: const Size(0, 48 * 3),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32),
+    final textStyle = TextStyle(
+      fontSize: 32,
+      color: active
+          ? ColorScheme.of(context).onPrimary
+          : ColorScheme.of(context).onSecondaryContainer,
+    );
+
+    return IconButtonTheme(
+      data: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          iconSize: 48,
+          minimumSize: const Size(48, 48 * 3),
+        ),
+      ),
+      child: active
+          ? IconButton.filled(
+              onPressed: onPressed,
+              style: IconButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32),
+                ),
               ),
+              icon: DefaultTextStyle.merge(style: textStyle, child: icon),
+              tooltip: tooltip,
+            )
+          : IconButton.filledTonal(
+              onPressed: onPressed,
+              icon: DefaultTextStyle.merge(style: textStyle, child: icon),
+              tooltip: tooltip,
             ),
-            icon: icon,
-            tooltip: tooltip,
-          )
-        : IconButton.filledTonal(
-            onPressed: onPressed,
-            style: IconButton.styleFrom(
-              iconSize: 48,
-              minimumSize: const Size(0, 48 * 3),
-            ),
-            icon: icon,
-            tooltip: tooltip,
-          );
+    );
   }
 }
