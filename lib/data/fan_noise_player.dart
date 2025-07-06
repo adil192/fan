@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:fan/data/fan_state.dart';
@@ -56,7 +57,7 @@ class FanNoisePlayer {
 
   void _play() {
     final targetVolume = lerpDouble(
-      0.4,
+      0.3,
       1.0,
       1 - fanState.angle.value.abs() / FanState.maxAngle,
     )!;
@@ -71,8 +72,10 @@ class FanNoisePlayer {
   bool get isFadingVolume => _volumeTimer?.isActive ?? false;
   void _fadeToVolume(
     double targetVolume, [
-    Duration duration = const Duration(seconds: 1),
-    int steps = 120,
+    // The time it takes to fade from 0 to 1.
+    Duration maxTime = const Duration(seconds: 1),
+    // The number of steps taken to fade from 0 to 1.
+    int maxSteps = 60,
   ]) {
     assert(
       targetVolume >= 0.0 && targetVolume <= 1.0,
@@ -81,6 +84,24 @@ class FanNoisePlayer {
     assert(isLoaded, 'Player must be loaded before fading volume');
     if (player.volume == targetVolume) return;
 
+    void finalize() {
+      _volumeTimer?.cancel();
+      player.setVolume(targetVolume);
+      if (targetVolume <= 0) {
+        player.pause();
+      } else {
+        player.play();
+      }
+    }
+
+    final diffVolumeAbs = (targetVolume - player.volume).abs();
+    final steps = (diffVolumeAbs * maxSteps).floor();
+    if (steps < 2) {
+      // If the difference is small enough, just set the volume directly.
+      finalize();
+      return;
+    }
+    final duration = maxTime * diffVolumeAbs;
     final increment = (targetVolume - player.volume) / steps;
 
     _volumeTimer?.cancel();
@@ -88,13 +109,7 @@ class FanNoisePlayer {
       final newVolume = player.volume + increment;
       if ((increment > 0 && newVolume >= targetVolume) ||
           (increment < 0 && newVolume <= targetVolume)) {
-        _volumeTimer?.cancel();
-        player.setVolume(targetVolume);
-        if (targetVolume <= 0) {
-          player.pause();
-        } else {
-          player.play();
-        }
+        finalize();
       } else {
         player.setVolume(newVolume);
         player.play();
