@@ -44,7 +44,7 @@ class _FanGame extends FlameGame {
     _fan.sprite.updateColorFilter(_fanColor);
   }
 
-  late final _fan = _FanComponent();
+  late final _fan = FanComponent();
 
   @override
   Future<void> onLoad() async {
@@ -55,8 +55,9 @@ class _FanGame extends FlameGame {
   Color backgroundColor() => Colors.transparent;
 }
 
-class _FanComponent extends PositionComponent {
-  _FanComponent()
+@visibleForTesting
+class FanComponent extends PositionComponent {
+  FanComponent()
     : super(
         size: _gameSize.toVector2(),
         anchor: const Anchor(0.5, 0.8),
@@ -89,8 +90,13 @@ class _FanComponent extends PositionComponent {
   }
 
   double _calculateAngle(double elapsed) {
-    final t = sin(elapsed / period * (2 * pi));
+    final t = FanComponent.curve(elapsed);
     return FanState.maxAngle * t;
+  }
+
+  static double curve(double elapsed) {
+    final s = sin((elapsed / period) * (2 * pi));
+    return s;
   }
 
   void _returnToCenter(double dt) {
