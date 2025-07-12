@@ -23,7 +23,7 @@ class FanNoisePlayer {
     JustAudioMediaKit.ensureInitialized();
 
     duration =
-        await player.setAsset('assets/audio/fan_loop.m4a') ??
+        await player.setAsset('assets/audio/fan_loop.ogg') ??
         const Duration(seconds: 57);
 
     fanState.addListener(_update);
@@ -37,9 +37,9 @@ class FanNoisePlayer {
 
     player.setPitch(switch (fanState) {
       FanState(isOn: false) => 0.8,
-      FanState(speed: FanSpeed.low) => 0.8,
+      FanState(speed: FanSpeed.low) => 0.9,
       FanState(speed: FanSpeed.medium) => 1.0,
-      FanState(speed: FanSpeed.high) => 1.2,
+      FanState(speed: FanSpeed.high) => 1.1,
     });
     player.setSpeed(switch (fanState) {
       FanState(isOn: false) => 0.8,
