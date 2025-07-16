@@ -79,7 +79,7 @@ class FanComponent extends PositionComponent {
   }
 
   /// The time it takes for the fan to turn left, right, and return to center.
-  static const period = 14;
+  static const period = 30;
   var elapsed = 0.0;
 
   void _oscillate(double dt) {
