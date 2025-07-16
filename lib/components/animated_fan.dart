@@ -61,7 +61,7 @@ class FanComponent extends PositionComponent {
     : super(
         size: _gameSize.toVector2(),
         anchor: const Anchor(0.5, 0.8),
-        position: Vector2(_gameSize.width / 2, _gameSize.height),
+        position: Vector2(_gameSize.width * 0.5, _gameSize.height * 0.8),
       ) {
     add(sprite);
   }
