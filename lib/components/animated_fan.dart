@@ -16,7 +16,6 @@ class AnimatedFan extends StatefulWidget {
   @override
   State<AnimatedFan> createState() => _AnimatedFanState();
 
-  @visibleForTesting
   static Future<void> loadAssets() async {
     await Flame.images.loadAll([
       for (final frame in _FanSpriteFrame.values) frame.path,

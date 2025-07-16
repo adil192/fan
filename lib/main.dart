@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:fan/components/animated_fan.dart';
 import 'package:fan/components/themed_app.dart';
 import 'package:fan/data/fan_noise_player.dart';
 import 'package:fan/data/fan_state.dart';
@@ -11,19 +14,21 @@ import 'package:flutter/services.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await fanNoisePlayer.init();
+  unawaited(AnimatedFan.loadAssets());
 
-  await stows.lastFanState.waitUntilRead().then((_) {
-    fanState.copyFrom(stows.lastFanState.value);
-  });
-  fanState.addListener(() {
-    stows.lastFanState
-      ..value = fanState
-      ..notifyListeners();
-  });
+  await Future.wait([fanNoisePlayer.init(), _loadFanState()]);
 
   _addLicenses();
   runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const ThemedApp(title: 'Fan', home: HomePage());
+  }
 }
 
 void _addLicenses() {
@@ -39,11 +44,13 @@ void _addLicenses() {
   });
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ThemedApp(title: 'Fan', home: HomePage());
-  }
+Future<void> _loadFanState() async {
+  await stows.lastFanState.waitUntilRead().then((_) {
+    fanState.copyFrom(stows.lastFanState.value);
+  });
+  fanState.addListener(() {
+    stows.lastFanState
+      ..value = fanState
+      ..notifyListeners();
+  });
 }
