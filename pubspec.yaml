@@ -22,8 +22,10 @@ dependencies:
   media_kit_libs_windows_audio:
 
   material_symbols_icons: ^4.2815.1
+
   stow_plain: ^0.4.0+1
   stow_codecs: ^1.2.0+1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-final fanState = FanState._();
+final fanState = FanState();
 
 class FanState extends ChangeNotifier {
-  FanState._();
+  @visibleForTesting
+  FanState();
 
   bool get isOn => _isOn;
   bool _isOn = false;

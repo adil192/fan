@@ -4,6 +4,7 @@ import 'package:fan/data/fan_state.dart';
 import 'package:fan/data/tint_matrix.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,13 @@ class AnimatedFan extends StatefulWidget {
 
   @override
   State<AnimatedFan> createState() => _AnimatedFanState();
+
+  @visibleForTesting
+  static Future<void> loadAssets() async {
+    await Flame.images.loadAll([
+      for (final frame in _FanSpriteFrame.values) frame.path,
+    ]);
+  }
 }
 
 class _AnimatedFanState extends State<AnimatedFan> {
@@ -140,15 +148,15 @@ class _FanSprite extends SpriteAnimationGroupComponent<_FanSpriteAnimation>
   @override
   Future<void> onLoad() async {
     final fanOnSpriteList = await Future.wait([
-      Sprite.load('fan-assets/fan_head_no_cover_01.png'),
-      Sprite.load('fan-assets/fan_head_no_cover_02.png'),
-      Sprite.load('fan-assets/fan_head_no_cover_03.png'),
-      Sprite.load('fan-assets/fan_head_no_cover_04.png'),
-      Sprite.load('fan-assets/fan_head_no_cover_05.png'),
-      Sprite.load('fan-assets/fan_head_no_cover_06.png'),
+      Sprite.load(_FanSpriteFrame.fanOn1.path),
+      Sprite.load(_FanSpriteFrame.fanOn2.path),
+      Sprite.load(_FanSpriteFrame.fanOn3.path),
+      Sprite.load(_FanSpriteFrame.fanOn4.path),
+      Sprite.load(_FanSpriteFrame.fanOn5.path),
+      Sprite.load(_FanSpriteFrame.fanOn6.path),
     ]);
     final fanOffSpriteList = await Future.wait([
-      Sprite.load('fan-assets/fan_head_no_cover_off.png'),
+      Sprite.load(_FanSpriteFrame.fanOff.path),
     ]);
 
     animations = {
@@ -202,3 +210,16 @@ class _FanSprite extends SpriteAnimationGroupComponent<_FanSpriteAnimation>
 }
 
 enum _FanSpriteAnimation { off, low, medium, high }
+
+enum _FanSpriteFrame {
+  fanOn1('fan-assets/fan_head_no_cover_01.png'),
+  fanOn2('fan-assets/fan_head_no_cover_02.png'),
+  fanOn3('fan-assets/fan_head_no_cover_03.png'),
+  fanOn4('fan-assets/fan_head_no_cover_04.png'),
+  fanOn5('fan-assets/fan_head_no_cover_05.png'),
+  fanOn6('fan-assets/fan_head_no_cover_06.png'),
+  fanOff('fan-assets/fan_head_no_cover_off.png');
+
+  const _FanSpriteFrame(this.path);
+  final String path;
+}
