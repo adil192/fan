@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:fan/data/fan_state.dart';
@@ -55,11 +56,15 @@ class FanNoisePlayer {
   }
 
   void _play() {
-    final targetVolume = lerpDouble(
-      0.3,
-      1.0,
+    const minVolume = 0.2;
+    const maxVolume = 1.0;
+    var targetVolume = lerpDouble(
+      minVolume,
+      maxVolume,
       1 - fanState.angle.value.abs() / FanState.maxAngle,
     )!;
+    targetVolume = sqrt(targetVolume);
+    targetVolume = targetVolume.clamp(minVolume, maxVolume);
     _fadeToVolume(targetVolume);
   }
 
