@@ -1,5 +1,7 @@
 import 'package:fan/components/themed_app.dart';
 import 'package:fan/data/fan_noise_player.dart';
+import 'package:fan/data/fan_state.dart';
+import 'package:fan/data/stows.dart';
 import 'package:fan/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +12,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await fanNoisePlayer.init();
+
+  await stows.lastFanState.waitUntilRead().then((_) {
+    fanState.copyFrom(stows.lastFanState.value);
+  });
+  fanState.addListener(() {
+    stows.lastFanState
+      ..value = fanState
+      ..notifyListeners();
+  });
 
   _addLicenses();
   runApp(const MyApp());

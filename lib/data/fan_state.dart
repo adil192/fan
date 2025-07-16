@@ -33,6 +33,19 @@ class FanState extends ChangeNotifier {
 
   final angle = ValueNotifier(0.0);
   static const maxAngle = pi / 4;
+
+  Map<String, dynamic> toJson() {
+    return {'speed': speed.index, 'oscillate': oscillate};
+  }
+
+  FanState.fromJson(Map<String, dynamic> json)
+    : _speed = FanSpeed.values[json['speed'] ?? 0],
+      _oscillate = json['oscillate'] ?? false;
+
+  void copyFrom(FanState other) {
+    speed = other.speed;
+    oscillate = other.oscillate;
+  }
 }
 
 enum FanSpeed { low, medium, high }
