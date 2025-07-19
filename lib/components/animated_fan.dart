@@ -77,56 +77,8 @@ class FanComponent extends PositionComponent {
 
   @override
   void update(double dt) {
-    if (fanState.oscillate) {
-      _oscillate(dt);
-    } else {
-      _returnToCenter(dt);
-    }
+    angle = fanState.angle.value;
     super.update(dt);
-  }
-
-  /// The time it takes for the fan to turn left, right, and return to center.
-  static const period = 30;
-  var elapsed = 0.0;
-
-  void _oscillate(double dt) {
-    if (!fanState.isOn) return; // can't move if fan is off
-
-    elapsed = (elapsed + dt) % period;
-    angle = _calculateAngle(elapsed);
-  }
-
-  double _calculateAngle(double elapsed) {
-    final t = FanComponent.curve(elapsed);
-    return FanState.maxAngle * t;
-  }
-
-  static double curve(double elapsed) {
-    final s = sin((elapsed / period) * (2 * pi));
-    return s;
-  }
-
-  void _returnToCenter(double dt) {
-    if (!fanState.isOn) return; // can't move if fan is off
-
-    if (-0.01 < angle && angle < 0.01) {
-      angle = 0;
-      return;
-    } else {
-      // oscillate back to center
-      final startAngleSign = angle.sign;
-      _oscillate(dt);
-      if (angle.sign != startAngleSign) {
-        // overshot center, so reset angle to 0
-        angle = 0;
-      }
-    }
-  }
-
-  @override
-  set angle(double angle) {
-    fanState.angle.value = angle;
-    super.angle = angle;
   }
 }
 

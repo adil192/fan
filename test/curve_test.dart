@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:fan/components/animated_fan.dart';
+import 'package:fan/data/oscillator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
@@ -10,34 +10,19 @@ import 'package:golden_screenshot/golden_screenshot.dart';
 void main() {
   group('Curve', () {
     test('At 0 time', () {
-      expect(
-        FanComponent.curve(FanComponent.period / 4 * 0),
-        moreOrLessEquals(0),
-      );
+      expect(Oscillator.curve(Oscillator.period / 4 * 0), moreOrLessEquals(0));
     });
     test('At quarter time', () {
-      expect(
-        FanComponent.curve(FanComponent.period / 4 * 1),
-        moreOrLessEquals(1),
-      );
+      expect(Oscillator.curve(Oscillator.period / 4 * 1), moreOrLessEquals(1));
     });
     test('At half time', () {
-      expect(
-        FanComponent.curve(FanComponent.period / 4 * 2),
-        moreOrLessEquals(0),
-      );
+      expect(Oscillator.curve(Oscillator.period / 4 * 2), moreOrLessEquals(0));
     });
     test('At three quarters time', () {
-      expect(
-        FanComponent.curve(FanComponent.period / 4 * 3),
-        moreOrLessEquals(-1),
-      );
+      expect(Oscillator.curve(Oscillator.period / 4 * 3), moreOrLessEquals(-1));
     });
     test('At full time', () {
-      expect(
-        FanComponent.curve(FanComponent.period / 4 * 4),
-        moreOrLessEquals(0),
-      );
+      expect(Oscillator.curve(Oscillator.period / 4 * 4), moreOrLessEquals(0));
     });
 
     testGoldens('Chart', (tester) async {
@@ -68,7 +53,7 @@ void main() {
 
 class _ChartPainter extends CustomPainter {
   double f(double t) {
-    return FanComponent.curve(t * FanComponent.period);
+    return Oscillator.curve(t * Oscillator.period);
   }
 
   @override

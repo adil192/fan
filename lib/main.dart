@@ -4,6 +4,7 @@ import 'package:fan/components/animated_fan.dart';
 import 'package:fan/components/themed_app.dart';
 import 'package:fan/data/fan_noise_player.dart';
 import 'package:fan/data/fan_state.dart';
+import 'package:fan/data/oscillator.dart';
 import 'package:fan/data/stows.dart';
 import 'package:fan/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,9 @@ Future<void> main() async {
   await Future.wait([fanNoisePlayer.init(), _loadFanState()]);
 
   _addLicenses();
+
+  Oscillator.init();
+
   runApp(const MyApp());
 }
 
