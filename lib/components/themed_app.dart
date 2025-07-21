@@ -3,10 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ThemedApp extends StatefulWidget {
-  final String title;
-  final Widget home;
+  const ThemedApp({
+    super.key,
+    required this.title,
+    this.initialRoute = '/',
+    required this.routes,
+  });
 
-  const ThemedApp({super.key, required this.title, required this.home});
+  final String title;
+  final String initialRoute;
+  final Map<String, Widget Function(BuildContext)> routes;
 
   @override
   State<ThemedApp> createState() => _ThemedAppState();
@@ -23,7 +29,6 @@ class ThemedApp extends StatefulWidget {
 
 class _ThemedAppState extends State<ThemedApp> {
   final _appKey = GlobalKey();
-  final _appChildKey = GlobalKey();
 
   @override
   void initState() {
@@ -56,10 +61,12 @@ class _ThemedAppState extends State<ThemedApp> {
             primaryColor: theme.colorScheme.primary,
           ),
           localizationsDelegates: [DefaultMaterialLocalizations.delegate],
-          home: Theme(
-            data: theme,
-            child: KeyedSubtree(key: _appChildKey, child: widget.home),
-          ),
+          initialRoute: widget.initialRoute,
+          routes: {
+            for (final entry in widget.routes.entries)
+              entry.key: (context) =>
+                  Theme(data: theme, child: entry.value(context)),
+          },
           debugShowCheckedModeBanner: false,
         );
       default:
@@ -67,7 +74,8 @@ class _ThemedAppState extends State<ThemedApp> {
           key: _appKey,
           title: widget.title,
           theme: theme,
-          home: KeyedSubtree(key: _appChildKey, child: widget.home),
+          initialRoute: widget.initialRoute,
+          routes: widget.routes,
           debugShowCheckedModeBanner: false,
         );
     }

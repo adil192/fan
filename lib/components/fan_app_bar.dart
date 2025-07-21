@@ -23,7 +23,7 @@ class FanAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           icon: const Icon(Icons.settings),
           onPressed: () {
-            // TODO: Go to settings
+            Navigator.pushNamed(context, '/settings');
           },
         ),
       ],
