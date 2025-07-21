@@ -60,6 +60,7 @@ class _ThemedAppState extends State<ThemedApp> {
             data: theme,
             child: KeyedSubtree(key: _appChildKey, child: widget.home),
           ),
+          debugShowCheckedModeBanner: false,
         );
       default:
         return MaterialApp(
@@ -67,6 +68,7 @@ class _ThemedAppState extends State<ThemedApp> {
           title: widget.title,
           theme: theme,
           home: KeyedSubtree(key: _appChildKey, child: widget.home),
+          debugShowCheckedModeBanner: false,
         );
     }
   }
