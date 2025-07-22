@@ -35,8 +35,12 @@ class SettingsDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          child: const Text('Close'),
+          onPressed: () => Navigator.of(context).pushNamed('/credits'),
+          child: const Text('Credits'),
+        ),
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Close'),
         ),
       ],
     );

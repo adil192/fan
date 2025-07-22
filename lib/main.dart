@@ -6,6 +6,7 @@ import 'package:fan/data/fan_noise_player.dart';
 import 'package:fan/data/fan_state.dart';
 import 'package:fan/data/oscillator.dart';
 import 'package:fan/data/stows.dart';
+import 'package:fan/pages/credits_page.dart';
 import 'package:fan/pages/home_page.dart';
 import 'package:fan/pages/settings_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/settings': (context) => const SettingsDialog(),
+        '/credits': (context) => const CreditsPage(),
       },
     );
   }
