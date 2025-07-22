@@ -57,7 +57,14 @@ class CreditsPage extends StatelessWidget {
             author:
                 'Full license details including assets and open source packages',
             trailing: const Icon(Icons.arrow_forward),
-            onTap: () => showLicensePage(context: context),
+            onTap: () => showLicensePage(
+              context: context,
+              applicationLegalese:
+                  'Copyright © 2025  Adil Hanney\n'
+                  'This program comes with absolutely no warranty. '
+                  'This is free software, and you are welcome to redistribute '
+                  'it under certain conditions.',
+            ),
           ),
           const SizedBox(height: 16),
         ],
