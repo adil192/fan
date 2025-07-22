@@ -90,6 +90,7 @@ class _FanControlsButton extends StatelessWidget {
         style: IconButton.styleFrom(
           iconSize: 48,
           minimumSize: const Size(48, 48 * 3),
+          foregroundColor: textStyle.color,
         ),
       ),
       child: active
