@@ -7,7 +7,7 @@ import 'package:fan/data/fan_state.dart';
 import 'package:fan/data/oscillator.dart';
 import 'package:fan/data/stows.dart';
 import 'package:fan/pages/home_page.dart';
-import 'package:fan/pages/settings_page.dart';
+import 'package:fan/pages/settings_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'Fan',
       routes: {
         '/': (context) => const HomePage(),
-        '/settings': (context) => const SettingsPage(),
+        '/settings': (context) => const SettingsDialog(),
       },
     );
   }

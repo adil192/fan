@@ -1,3 +1,4 @@
+import 'package:fan/pages/settings_dialog.dart';
 import 'package:flutter/material.dart';
 
 class FanAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -23,7 +24,7 @@ class FanAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           icon: const Icon(Icons.settings),
           onPressed: () {
-            Navigator.pushNamed(context, '/settings');
+            SettingsDialog.show(context);
           },
         ),
       ],
