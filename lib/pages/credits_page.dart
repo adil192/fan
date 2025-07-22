@@ -10,7 +10,7 @@ class CreditsPage extends StatelessWidget {
     'https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?item=146n4f419v416n8q83',
   );
   static final fanAudioUri = Uri.parse(
-    'https://pixabay.com/sound-effects/fan-loop-75075/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=75075',
+    'https://freesound.org/people/fedsmoker/sounds/208525/',
   );
 
   @override
