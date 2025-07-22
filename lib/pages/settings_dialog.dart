@@ -25,12 +25,7 @@ class SettingsDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _SettingsSubtitle('Theme'),
-            const ThemePicker(),
-            _SettingsSubtitle('Theme'),
-            const ThemePicker(),
-          ],
+          children: [_SettingsSubtitle('Theme'), const ThemePicker()],
         ),
       ),
       actions: [
