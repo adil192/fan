@@ -17,17 +17,42 @@ class SettingsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      alignment: Alignment.topRight,
-      // Slightly less to fully cover the settings button
+      // Align dialog to cover the settings button
       insetPadding: const EdgeInsets.all(FanAppBar.buttonMargin * 0.95),
+      alignment: Alignment.topRight,
       title: const Text('Settings'),
-      content: const ThemePicker(),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _SettingsSubtitle('Theme'),
+            const ThemePicker(),
+            _SettingsSubtitle('Theme'),
+            const ThemePicker(),
+          ],
+        ),
+      ),
       actions: [
         TextButton(
           child: const Text('Close'),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],
+    );
+  }
+}
+
+class _SettingsSubtitle extends StatelessWidget {
+  const _SettingsSubtitle(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Text(text, style: TextTheme.of(context).titleMedium),
     );
   }
 }
