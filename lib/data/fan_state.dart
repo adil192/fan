@@ -17,7 +17,7 @@ class FanState extends ChangeNotifier {
   }
 
   FanSpeed get speed => _speed;
-  FanSpeed _speed = FanSpeed.low;
+  FanSpeed _speed = FanSpeed.medium;
   set speed(FanSpeed speed) {
     if (_speed == speed) return;
     _speed = speed;
