@@ -1,6 +1,6 @@
 {
-    "name": "fan",
-    "short_name": "fan",
+    "name": "Just Fan Noise",
+    "short_name": "Fan Noise",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

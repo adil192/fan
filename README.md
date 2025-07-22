@@ -1,4 +1,4 @@
-# Fan
+# Just Fan Noise
 
 A fan noise app built with Flutter.
 

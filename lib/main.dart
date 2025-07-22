@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemedApp(
-      title: 'Fan',
+      title: 'Just Fan Noise',
       routes: {
         '/': (context) => const HomePage(),
         '/settings': (context) => const SettingsDialog(),
