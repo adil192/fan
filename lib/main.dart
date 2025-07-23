@@ -21,7 +21,7 @@ Future<void> main() async {
 
   await Future.wait([fanNoisePlayer.init(), _loadFanState()]);
 
-  _addLicenses();
+  addAssetLicenses();
 
   Oscillator.init();
 
@@ -44,7 +44,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-void _addLicenses() {
+@visibleForTesting
+void addAssetLicenses() {
   LicenseRegistry.addLicense(() async* {
     yield LicenseEntryWithLineBreaks([
       '_assets_audio',

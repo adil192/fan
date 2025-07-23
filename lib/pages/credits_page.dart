@@ -59,6 +59,7 @@ class CreditsPage extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward),
             onTap: () => showLicensePage(
               context: context,
+              applicationName: 'Just Fan Noise',
               applicationLegalese:
                   'Copyright © 2025  Adil Hanney\n'
                   'This program comes with absolutely no warranty. '
