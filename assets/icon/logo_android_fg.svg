@@ -5,7 +5,7 @@
    viewBox="0 0 100 100"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <g transform="translate(50,50) scale(0.6) translate(-50,-50)">
+  <g transform="translate(50,50) scale(1.04) translate(-50,-50)">
   <g transform="translate(-3820.9929,1171.0699)">
     <g transform="matrix(0.32502724,0,0,0.32502724,3698.5035,-1334.4463)">
       <g id="blade-top" transform="translate(484.24529,648.14371)">

@@ -5,7 +5,6 @@
    viewBox="0 0 100 100"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <g transform="translate(50,50) scale(0.6) translate(-50,-50)">
   <mask id="cut-out-circle">
     <circle
        id="cut-out-circle-allow-all"
@@ -31,6 +30,7 @@
        cy="-660.54755"
        r="37.366135" />
   </mask>
+  <g transform="translate(50,50) scale(1.04) translate(-50,-50)">
   <g transform="translate(-3820.9929,1171.0699)">
     <g transform="matrix(0.32502724,0,0,0.32502724,3698.5035,-1334.4463)">
       <g mask="url(#cut-out-circle)">
@@ -63,7 +63,7 @@
          cy="-660.54755"
          r="37.366135" />
       </g>
-      </g>
     </g>
+  </g>
   </g>
 </svg>

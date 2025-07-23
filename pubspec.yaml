@@ -35,9 +35,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
   golden_screenshot: ^3.3.0
-  icons_launcher: ^3.0.0
 
 flutter:
   uses-material-design: true
@@ -47,21 +47,17 @@ flutter:
     - assets/images/fan-assets/
 
 # ./scripts/generate-icons.sh
-icons_launcher:
+flutter_launcher_icons:
   image_path: "assets/icon/logo.png"
-  platforms:
-    android:
-      enable: true
-      adaptive_background_color: "#1a110f"
-      adaptive_foreground_image: "assets/icon/logo_android_fg.png"
-      adaptive_monochrome_image: "assets/icon/logo_android_mono.png"
-    ios:
-      enable: false
-    macos:
-      enable: false
-    windows:
-      enable: true
-    linux:
-      enable: true
-    web:
-      enable: true
+  android: true
+  adaptive_icon_background: "#1a110f"
+  adaptive_icon_foreground_inset: 24
+  adaptive_icon_foreground: "assets/icon/logo_android_fg.png"
+  adaptive_icon_monochrome: "assets/icon/logo_android_mono.png"
+  web:
+    generate: true
+    background_color: "#1a110f"
+    theme_color: "#ffd2c0"
+  windows:
+    generate: true
+    icon_size: 256
