@@ -49,6 +49,8 @@ icons_launcher:
   platforms:
     android:
       enable: true
+      adaptive_background_color: "#1a110f"
+      adaptive_foreground_image: "assets/icon/logo_android_fg.png"
     ios:
       enable: false
     macos:

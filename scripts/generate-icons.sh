@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Convert logo svg to png
-SVG_PATH="assets/icon/logo.svg"
-PNG_PATH="assets/icon/logo.png"
-rsvg-convert -o $PNG_PATH $SVG_PATH
+# Convert all svg to png
+for svg_file in assets/icon/*.svg; do
+  png_file="${svg_file%.svg}.png"
+  rsvg-convert -o "$png_file" "$svg_file"
+done
 
 dart run icons_launcher:create
