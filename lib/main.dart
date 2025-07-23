@@ -16,14 +16,13 @@ import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stows.enablePersistence();
 
-  unawaited(AnimatedFan.loadAssets());
-
+  unawaited(AnimatedFan.loadAssets()); // Start loading assets early
   await Future.wait([fanNoisePlayer.init(), _loadFanState()]);
+  Oscillator.init();
 
   addAssetLicenses();
-
-  Oscillator.init();
 
   runApp(const MyApp());
 }

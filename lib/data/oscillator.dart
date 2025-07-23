@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fan/data/fan_state.dart';
+import 'package:fan/data/stows.dart';
 import 'package:flutter/material.dart';
 
 abstract class Oscillator {
@@ -17,10 +18,11 @@ abstract class Oscillator {
     _timer = Timer.periodic(duration, (_) => _onTick(dt));
   }
 
-  /// The time it takes for the fan to turn left, right, and return to center.
-  static const period = 30;
+  /// The time taken in seconds to oscillate/rotate
+  /// from one side to the other and back again.
+  static int get period => stows.oscillationPeriod.value;
 
-  /// The time since the current period began.
+  /// The time in seconds since the current period began.
   @visibleForTesting
   static var elapsed = 0.0;
 

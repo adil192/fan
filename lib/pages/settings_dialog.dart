@@ -1,4 +1,5 @@
 import 'package:fan/components/fan_app_bar.dart';
+import 'package:fan/components/oscillation_period.dart';
 import 'package:fan/components/theme_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,20 @@ class SettingsDialog extends StatelessWidget {
       insetPadding: const EdgeInsets.all(FanAppBar.buttonMargin * 0.95),
       alignment: Alignment.topRight,
       title: const Text('Settings'),
-      content: SingleChildScrollView(
+      content: const SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [_SettingsSubtitle('Theme'), const ThemePicker()],
+          children: [
+            _SettingsSubtitle('Theme'),
+            ThemePicker(),
+
+            _SettingsSubtitle(
+              'Oscillation time',
+              trailing: OscillationPeriodText(),
+            ),
+            OscillationPeriodSlider(),
+          ],
         ),
       ),
       actions: [
@@ -43,15 +53,21 @@ class SettingsDialog extends StatelessWidget {
 }
 
 class _SettingsSubtitle extends StatelessWidget {
-  const _SettingsSubtitle(this.text);
+  const _SettingsSubtitle(this.text, {this.trailing});
 
   final String text;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: Text(text, style: TextTheme.of(context).titleMedium),
+      child: Row(
+        children: [
+          Expanded(child: Text(text, style: TextTheme.of(context).titleMedium)),
+          if (trailing != null) trailing!,
+        ],
+      ),
     );
   }
 }
