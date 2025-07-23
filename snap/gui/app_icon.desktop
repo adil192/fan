@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Just Fan Noise
+Comment=Fan noise simulator app
+Exec=fan
+Icon=app_icon.png
+Terminal=false
+Type=Application
+Categories=Entertainment;
