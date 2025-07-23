@@ -57,9 +57,7 @@ abstract class Oscillator {
   @visibleForTesting
   static void returnToCenter(double dt) {
     if (-0.01 < fanState.angle.value && fanState.angle.value < 0.01) {
-      // Round to zero
-      progress = 0;
-      fanState.angle.value = 0;
+      roundToZero();
       return;
     }
 
@@ -73,8 +71,7 @@ abstract class Oscillator {
     final newAngleSign = fanState.angle.value.sign;
     if (previousAngleSign != newAngleSign) {
       // If we crossed zero, round to zero to prevent overshoot
-      progress = 0;
-      fanState.angle.value = 0;
+      roundToZero();
     }
   }
 
@@ -85,5 +82,15 @@ abstract class Oscillator {
     } else if (0.5 < progress && progress < 0.75) {
       progress = 1.5 - progress;
     }
+  }
+
+  static void roundToZero() {
+    if (0.25 < progress && progress <= 0.75) {
+      progress = 0.5; // so when we resume, it goes in the same direction
+    } else {
+      progress = 0;
+    }
+
+    fanState.angle.value = 0;
   }
 }
