@@ -50,7 +50,7 @@ class FanState extends ChangeNotifier {
 
   @override
   String toString() {
-    return 'FanState(isOn: $isOn, speed: $speed, oscillate: $oscillate, angle: ${angle.value})';
+    return 'FanState(speed: $speed, oscillate: $oscillate) { isOn: $isOn, angle: ${angle.value} }';
   }
 }
 
