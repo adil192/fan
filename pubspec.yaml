@@ -51,6 +51,7 @@ icons_launcher:
       enable: true
       adaptive_background_color: "#1a110f"
       adaptive_foreground_image: "assets/icon/logo_android_fg.png"
+      adaptive_monochrome_image: "assets/icon/logo_android_mono.png"
     ios:
       enable: false
     macos:
