@@ -47,6 +47,11 @@ class FanState extends ChangeNotifier {
     speed = other.speed;
     oscillate = other.oscillate;
   }
+
+  @override
+  String toString() {
+    return 'FanState(isOn: $isOn, speed: $speed, oscillate: $oscillate, angle: ${angle.value})';
+  }
 }
 
 enum FanSpeed { low, medium, high }

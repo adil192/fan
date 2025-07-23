@@ -21,6 +21,7 @@ abstract class Oscillator {
   static const period = 30;
 
   /// The time since the current period began.
+  @visibleForTesting
   static var elapsed = 0.0;
 
   static void _onTick(double dt) {
@@ -29,16 +30,17 @@ abstract class Oscillator {
     if (fanState.oscillate) {
       _oscillate(dt);
     } else {
-      _returnToCenter(dt);
+      returnToCenter(dt);
     }
   }
 
   static void _oscillate(double dt) {
     elapsed = (elapsed + dt) % period;
-    fanState.angle.value = _calculateAngle(elapsed);
+    fanState.angle.value = calculateAngle(elapsed);
   }
 
-  static double _calculateAngle(double elapsed) {
+  @visibleForTesting
+  static double calculateAngle(double elapsed) {
     final t = curve(elapsed);
     return FanState.maxAngle * t;
   }
@@ -49,7 +51,8 @@ abstract class Oscillator {
     return s;
   }
 
-  static void _returnToCenter(double dt) {
+  @visibleForTesting
+  static void returnToCenter(double dt) {
     if (-0.01 < fanState.angle.value && fanState.angle.value < 0.01) {
       // Round to zero
       fanState.angle.value = 0;
@@ -57,15 +60,19 @@ abstract class Oscillator {
     }
 
     // If heading away from center, reverse direction
-    if (elapsed < period / 4) {
-      elapsed = period / 2 - elapsed;
-    } else if (period / 2 < elapsed && elapsed < period * 3 / 4) {
-      elapsed = period - elapsed;
-    } else {
-      // Otherwise, continue oscillating towards center
-      elapsed = (elapsed + dt) % period;
-    }
+    headTowardsCenter();
 
-    fanState.angle.value = _calculateAngle(elapsed);
+    // Continue oscillating towards center
+    elapsed = (elapsed + dt) % period;
+    fanState.angle.value = calculateAngle(elapsed);
+  }
+
+  @visibleForTesting
+  static void headTowardsCenter() {
+    if (elapsed < period * 0.25) {
+      elapsed = period * 0.5 - elapsed;
+    } else if (period * 0.5 < elapsed && elapsed < period * 0.75) {
+      elapsed = period - elapsed;
+    }
   }
 }
