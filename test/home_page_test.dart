@@ -21,24 +21,35 @@ void main() {
     SharedPreferences.setMockInitialValues({});
 
     for (final accent in Accent.values) {
-      testGoldens(accent.name, (tester) async {
-        fanState.copyFrom(targetFanState);
-        stows.accentColor.value = accent.color;
+      group(accent.name, () {
+        for (final showSettings in const [false, true]) {
+          final showSettingsLabel = showSettings
+              ? 'with-settings'
+              : 'no-settings';
+          testGoldens(showSettingsLabel, (tester) async {
+            fanState.copyFrom(targetFanState);
+            stows.accentColor.value = accent.color;
 
-        final widget = _HomeApp();
-        await tester.pumpWidget(widget);
+            final widget = _HomeApp();
+            await tester.pumpWidget(widget);
 
-        await tester.loadFonts();
-        await tester.precacheTopbarImages();
-        await tester.runAsync(AnimatedFan.loadAssets);
-        await tester.pumpFrames(widget, const Duration(seconds: 1));
+            if (showSettings) {
+              await tester.tap(find.byKey(const Key('settings_button')));
+            }
 
-        await expectLater(
-          find.byType(HomePage),
-          matchesGoldenFile(
-            'goldens/home_page_${accent.index}_${accent.name}.png',
-          ),
-        );
+            await tester.loadFonts();
+            await tester.precacheTopbarImages();
+            await tester.runAsync(AnimatedFan.loadAssets);
+            await tester.pumpFrames(widget, const Duration(seconds: 1));
+
+            await expectLater(
+              find.byType(MaterialApp),
+              matchesGoldenFile(
+                'goldens/home_page_${accent.index}_${accent.name}_$showSettingsLabel.png',
+              ),
+            );
+          });
+        }
       });
     }
   });

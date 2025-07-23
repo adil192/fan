@@ -16,6 +16,7 @@ class FanAppBar extends StatelessWidget implements PreferredSizeWidget {
       actionsPadding: const EdgeInsets.all(buttonMargin),
       actions: [
         IconButton.filled(
+          key: const Key('settings_button'),
           style: IconButton.styleFrom(
             backgroundColor: ColorScheme.of(context).primary,
             foregroundColor: ColorScheme.of(context).onPrimary,
