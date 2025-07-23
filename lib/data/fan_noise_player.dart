@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:audio_session/audio_session.dart';
 import 'package:fan/data/fan_state.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -11,7 +12,7 @@ final fanNoisePlayer = FanNoisePlayer();
 
 @visibleForTesting
 class FanNoisePlayer {
-  late final player = AudioPlayer()
+  late final player = AudioPlayer(useLazyPreparation: false)
     ..setLoopMode(LoopMode.one)
     ..setVolume(0);
   late final Duration duration;
@@ -20,11 +21,25 @@ class FanNoisePlayer {
   bool _isLoaded = false;
 
   Future<void> init() async {
+    final audioSession = await AudioSession.instance;
+    await audioSession.configure(
+      const AudioSessionConfiguration(
+        avAudioSessionCategory: AVAudioSessionCategory.playback,
+        avAudioSessionCategoryOptions:
+            AVAudioSessionCategoryOptions.mixWithOthers,
+        avAudioSessionMode: AVAudioSessionMode.defaultMode,
+        androidAudioAttributes: AndroidAudioAttributes(
+          contentType: AndroidAudioContentType.music,
+          usage: AndroidAudioUsage.media,
+        ),
+      ),
+    );
+
     JustAudioMediaKit.ensureInitialized();
 
     duration =
         await player.setAsset('assets/audio/fan_loop.ogg') ??
-        const Duration(seconds: 57);
+        const Duration(seconds: 17);
 
     fanState.addListener(_update);
     fanState.angle.addListener(_update);
