@@ -74,6 +74,8 @@ class _ThemedAppState extends State<ThemedApp> {
           key: _appKey,
           title: widget.title,
           theme: theme,
+          darkTheme: theme,
+          themeMode: ThemeMode.dark,
           initialRoute: widget.initialRoute,
           routes: widget.routes,
           debugShowCheckedModeBanner: false,
