@@ -72,7 +72,7 @@ abstract class Oscillator {
     if (elapsed < period * 0.25) {
       elapsed = period * 0.5 - elapsed;
     } else if (period * 0.5 < elapsed && elapsed < period * 0.75) {
-      elapsed = period - elapsed;
+      elapsed = period * 1.5 - elapsed;
     }
   }
 }
