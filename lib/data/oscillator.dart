@@ -65,8 +65,8 @@ abstract class Oscillator {
     // If heading away from center, reverse direction
     headTowardsCenter();
 
-    // Continue oscillating towards center
-    progress = (progress + dt / period) % 1;
+    // Continue oscillating towards center (faster than normal oscillation)
+    progress = (progress + 4 * dt / period) % 1;
     fanState.angle.value = calculateAngle(progress);
   }
 
