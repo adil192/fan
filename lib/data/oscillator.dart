@@ -58,6 +58,7 @@ abstract class Oscillator {
   static void returnToCenter(double dt) {
     if (-0.01 < fanState.angle.value && fanState.angle.value < 0.01) {
       // Round to zero
+      progress = 0;
       fanState.angle.value = 0;
       return;
     }
@@ -67,7 +68,14 @@ abstract class Oscillator {
 
     // Continue oscillating towards center (faster than normal oscillation)
     progress = (progress + 4 * dt / period) % 1;
+    final previousAngleSign = fanState.angle.value.sign;
     fanState.angle.value = calculateAngle(progress);
+    final newAngleSign = fanState.angle.value.sign;
+    if (previousAngleSign != newAngleSign) {
+      // If we crossed zero, round to zero to prevent overshoot
+      progress = 0;
+      fanState.angle.value = 0;
+    }
   }
 
   @visibleForTesting
