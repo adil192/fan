@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -60,6 +61,13 @@ class CreditsPage extends StatelessWidget {
             onTap: () => showLicensePage(
               context: context,
               applicationName: 'Just Fan Noise',
+              applicationIcon: SvgPicture.asset(
+                'assets/icon/logo_android_mono.svg',
+                colorFilter: ColorFilter.mode(
+                  ColorScheme.of(context).onSurface,
+                  BlendMode.srcIn,
+                ),
+              ),
               applicationLegalese:
                   'Copyright © 2025  Adil Hanney\n'
                   'This program comes with absolutely no warranty. '
