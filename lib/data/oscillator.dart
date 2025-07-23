@@ -22,9 +22,10 @@ abstract class Oscillator {
   /// from one side to the other and back again.
   static int get period => stows.oscillationPeriod.value;
 
-  /// The time in seconds since the current period began.
+  /// The progress through the current oscillation period, between 0 and 1.
+  /// After [period] seconds, it will reset to 0.
   @visibleForTesting
-  static var elapsed = 0.0;
+  static var progress = 0.0;
 
   static void _onTick(double dt) {
     if (!fanState.isOn) return;
@@ -37,19 +38,19 @@ abstract class Oscillator {
   }
 
   static void _oscillate(double dt) {
-    elapsed = (elapsed + dt) % period;
-    fanState.angle.value = calculateAngle(elapsed);
+    progress = (progress + dt / period) % 1;
+    fanState.angle.value = calculateAngle(progress);
   }
 
   @visibleForTesting
-  static double calculateAngle(double elapsed) {
-    final t = curve(elapsed);
+  static double calculateAngle(double progress) {
+    final t = curve(progress);
     return FanState.maxAngle * t;
   }
 
   @visibleForTesting
-  static double curve(double elapsed) {
-    final s = sin((elapsed / period) * (2 * pi));
+  static double curve(double progress) {
+    final s = sin(progress * (2 * pi));
     return s;
   }
 
@@ -65,16 +66,16 @@ abstract class Oscillator {
     headTowardsCenter();
 
     // Continue oscillating towards center
-    elapsed = (elapsed + dt) % period;
-    fanState.angle.value = calculateAngle(elapsed);
+    progress = (progress + dt / period) % 1;
+    fanState.angle.value = calculateAngle(progress);
   }
 
   @visibleForTesting
   static void headTowardsCenter() {
-    if (elapsed < period * 0.25) {
-      elapsed = period * 0.5 - elapsed;
-    } else if (period * 0.5 < elapsed && elapsed < period * 0.75) {
-      elapsed = period * 1.5 - elapsed;
+    if (progress < 0.25) {
+      progress = 0.5 - progress;
+    } else if (0.5 < progress && progress < 0.75) {
+      progress = 1.5 - progress;
     }
   }
 }

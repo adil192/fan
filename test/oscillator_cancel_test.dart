@@ -8,22 +8,29 @@ void main() {
     stows.oscillationPeriod.value = period;
     assert(Oscillator.period == period);
 
-    for (final t in const [0.0, 0.1, 0.25, 0.35, 0.5, 0.6, 0.75, 0.85, 1.0]) {
-      final elapsed = period * t;
-      test('elapsed: $elapsed', () {
-        Oscillator.elapsed = elapsed;
+    for (final originalProgress in const [
+      0.0,
+      0.1,
+      0.25,
+      0.35,
+      0.5,
+      0.6,
+      0.75,
+      0.85,
+      1.0,
+    ]) {
+      test('progress: $originalProgress', () {
+        Oscillator.progress = originalProgress;
+
         Oscillator.headTowardsCenter();
-        final newElapsed = Oscillator.elapsed;
-        printOnFailure(
-          'headTowardsCenter: ${elapsed}s ($t) -> '
-          '${newElapsed}s (${newElapsed / period})',
-        );
+        final newProgress = Oscillator.progress;
+        printOnFailure('headTowardsCenter: $originalProgress -> $newProgress');
 
-        expect(newElapsed, inInclusiveRange(0.0, period));
+        expect(newProgress, inInclusiveRange(0, 1));
 
-        final originalAngle = Oscillator.calculateAngle(elapsed);
-        final newAngle = Oscillator.calculateAngle(newElapsed);
-        final nextAngle = Oscillator.calculateAngle(newElapsed + 0.1);
+        final originalAngle = Oscillator.calculateAngle(originalProgress);
+        final newAngle = Oscillator.calculateAngle(newProgress);
+        final nextAngle = Oscillator.calculateAngle(newProgress + 0.01);
 
         expect(
           originalAngle,
