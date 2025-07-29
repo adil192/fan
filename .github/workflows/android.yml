@@ -21,13 +21,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Checkout assets
         uses: actions/checkout@v4
         with:
           repository: adil192/fan-assets
           path: assets/images/fan-assets
           token: ${{ secrets.FAN_ASSETS_TOKEN}}
-
       - name: Print assets directory contents
         run: tree assets
 
@@ -39,13 +39,13 @@ jobs:
             build/
             .flutter-plugins-dependencies
             pubspec.lock
-          key: ${{ runner.OS }}-fan-${{ hashFiles('**/pubspec.lock') }}-${{ hashFiles('**/*.dart') }}
+          key: ${{ runner.OS }}-fan-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.OS }}-fan-
 
       - name: Remove development dependencies
         run: ./patches/remove_dev_dependencies.sh
-      
+
       - name: Setup keystore
         run: |
           echo "${{ secrets.SIGNING_KEY }}" | base64 -d > android/android.jks
@@ -64,7 +64,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'microsoft'
+          distribution: 'temurin'
           java-version: '21'
 
       - name: Disable Flutter CLI animations
@@ -72,8 +72,7 @@ jobs:
 
       - run: flutter pub get
 
-      - name: Build apk
-        run: flutter build apk
+      - run: flutter build apk
 
       - name: Rename apk
         id: rename_apk
@@ -88,7 +87,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Saber-Android
+          name: JustFanNoise-Android
           path: output/${{ steps.rename_apk.outputs.apkName }}
 
       - name: Upload to GitHub release
