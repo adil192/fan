@@ -52,22 +52,18 @@ class _ThemedAppState extends State<ThemedApp> {
 
     switch (Theme.of(context).platform) {
       case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-        return CupertinoApp(
-          key: _appKey,
-          title: widget.title,
-          theme: CupertinoThemeData(
-            brightness: theme.brightness,
-            primaryColor: theme.colorScheme.primary,
+      case TargetPlatform.linux:
+        return Theme(
+          data: theme,
+          child: CupertinoApp(
+            key: _appKey,
+            title: widget.title,
+            theme: MaterialBasedCupertinoThemeData(materialTheme: theme),
+            localizationsDelegates: [DefaultMaterialLocalizations.delegate],
+            initialRoute: widget.initialRoute,
+            routes: widget.routes,
+            debugShowCheckedModeBanner: false,
           ),
-          localizationsDelegates: [DefaultMaterialLocalizations.delegate],
-          initialRoute: widget.initialRoute,
-          routes: {
-            for (final entry in widget.routes.entries)
-              entry.key: (context) =>
-                  Theme(data: theme, child: entry.value(context)),
-          },
-          debugShowCheckedModeBanner: false,
         );
       default:
         return MaterialApp(
