@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:fan/components/animated_fan.dart';
 import 'package:fan/components/themed_app.dart';
@@ -15,7 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final binding = WidgetsFlutterBinding.ensureInitialized();
+  final showSplashScreen = !kIsWeb && Platform.isAndroid;
+  if (showSplashScreen) binding.deferFirstFrame();
+
   Stows.enablePersistence();
 
   unawaited(AnimatedFan.loadAssets()); // Start loading assets early
@@ -24,6 +28,7 @@ Future<void> main() async {
 
   addAssetLicenses();
 
+  if (showSplashScreen) binding.allowFirstFrame();
   runApp(const MyApp());
 }
 
