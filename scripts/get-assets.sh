@@ -9,6 +9,6 @@ if [ -d "assets/images/fan-assets" ] && [ "$(ls -A assets/images/fan-assets)" ];
     echo "✔ Fan assets found."
 else
     echo "⚠ Fan assets missing! Cloning from repository..."
-    git clone https://github.com/adil192/fan-assets.git assets/images/fan-assets
+    git clone git@github.com:adil192/fan-assets.git assets/images/fan-assets
     exit $?
 fi
