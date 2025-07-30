@@ -1,0 +1,2 @@
+- Better splash screen on Android
+- Fixed the theme picker not updating immediately on iOS

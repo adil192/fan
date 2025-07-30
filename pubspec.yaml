@@ -4,7 +4,7 @@ publish_to: 'none'
 
 # Version code is two digits each for major/minor/patch, and an extra digit for the revision.
 # e.g. 1.2.3(.4) => 102034
-version: 1.0.0+100000
+version: 1.0.1+100010
 
 environment:
   sdk: ^3.8.1
