@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 final fanState = FanState();
@@ -33,7 +31,6 @@ class FanState extends ChangeNotifier {
   }
 
   final angle = ValueNotifier(0.0);
-  static const maxAngle = pi / 4;
 
   Map<String, dynamic> toJson() {
     return {'speed': speed.index, 'oscillate': oscillate};

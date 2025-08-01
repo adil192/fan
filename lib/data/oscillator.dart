@@ -45,7 +45,7 @@ abstract class Oscillator {
   @visibleForTesting
   static double calculateAngle(double progress) {
     final t = curve(progress);
-    return FanState.maxAngle * t;
+    return stows.oscillationAngle.value * t;
   }
 
   @visibleForTesting

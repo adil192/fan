@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fan/data/accent_colors.dart';
 import 'package:fan/data/fan_state.dart';
 import 'package:stow_codecs/stow_codecs.dart';
@@ -30,6 +32,19 @@ class Stows {
   final oscillationPeriod = PlainStow(
     'oscillationPeriod',
     30,
+    volatile: volatile,
+  );
+
+  /// The maximum angle in radians that the fan can reach when oscillating.
+  ///
+  /// The fan will oscillate between -angle and +angle.
+  ///
+  /// This is expected to be between 0 and pi/2 (90 degrees).
+  ///
+  /// The default is pi/4 (45 degrees).
+  final oscillationAngle = PlainStow(
+    'oscillationAngle',
+    pi / 4,
     volatile: volatile,
   );
 }
