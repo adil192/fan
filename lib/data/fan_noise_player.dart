@@ -74,10 +74,11 @@ class FanNoisePlayer {
   void _play() {
     const minVolume = 0.2;
     const maxVolume = 1.0;
+    const mostQuietAngle = 0.4 * pi; // ~72°
     var targetVolume = lerpDouble(
       minVolume,
       maxVolume,
-      1 - fanState.angle.value.abs() / stows.oscillationAngle.value,
+      1 - fanState.angle.value.abs() / mostQuietAngle,
     )!;
     targetVolume = targetVolume.clamp(minVolume, maxVolume);
     targetVolume = sqrt(targetVolume);
