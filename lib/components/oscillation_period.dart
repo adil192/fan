@@ -27,7 +27,7 @@ class OscillationPeriodSlider extends StatelessWidget {
   const OscillationPeriodSlider({super.key});
 
   static const minPeriod = 5.0;
-  static const maxPeriod = 60.0;
+  static const maxPeriod = 55.0;
   static const step = 5.0;
   static const divisions = (maxPeriod - minPeriod) ~/ step;
 
