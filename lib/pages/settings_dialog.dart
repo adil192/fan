@@ -1,4 +1,5 @@
 import 'package:fan/components/fan_app_bar.dart';
+import 'package:fan/components/oscillation_angle.dart';
 import 'package:fan/components/oscillation_period.dart';
 import 'package:fan/components/theme_picker.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,12 @@ class SettingsDialog extends StatelessWidget {
               trailing: OscillationPeriodText(),
             ),
             OscillationPeriodSlider(),
+
+            _SettingsSubtitle(
+              'Oscillation angle',
+              trailing: OscillationAngleText(),
+            ),
+            OscillationAngleSlider(),
           ],
         ),
       ),
