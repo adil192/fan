@@ -35,7 +35,8 @@ class FanNoisePlayer {
       ),
     );
 
-    JustAudioMediaKit.ensureInitialized();
+    // Use mediakit on all platforms except android
+    JustAudioMediaKit.ensureInitialized(macOS: true, iOS: true);
 
     duration =
         await player.setAsset('assets/audio/fan_loop.ogg') ??

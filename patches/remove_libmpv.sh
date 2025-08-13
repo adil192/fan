@@ -17,4 +17,4 @@ sed -i -e "/media_kit/d" pubspec.yaml
 
 echo "Removing JustAudioMediaKit usages"
 sed -i -e "/package:just_audio_media_kit/d" lib/data/fan_noise_player.dart
-sed -i -e "/JustAudioMediaKit.ensureInitialized()/d" lib/data/fan_noise_player.dart
+sed -i -e "/JustAudioMediaKit.ensureInitialized(/d" lib/data/fan_noise_player.dart
