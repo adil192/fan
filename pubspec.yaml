@@ -22,8 +22,6 @@ dependencies:
   just_audio_media_kit: ^2.1.0
   media_kit:
   media_kit_libs_audio:
-  media_kit_libs_linux:
-  media_kit_libs_windows_audio:
 
   material_symbols_icons: ^4.2815.1
 

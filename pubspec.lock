@@ -361,7 +361,7 @@ packages:
     source: hosted
     version: "1.1.4"
   media_kit_libs_linux:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: media_kit_libs_linux
       sha256: "2b473399a49ec94452c4d4ae51cfc0f6585074398d74216092bf3d54aac37ecf"
@@ -377,7 +377,7 @@ packages:
     source: hosted
     version: "1.1.4"
   media_kit_libs_windows_audio:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: media_kit_libs_windows_audio
       sha256: c2fd558cc87b9d89a801141fcdffe02e338a3b21a41a18fbd63d5b221a1b8e53
