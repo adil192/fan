@@ -54,6 +54,8 @@ flutter_launcher_icons:
   adaptive_icon_foreground_inset: 24
   adaptive_icon_foreground: "assets/icon/logo_android_fg.png"
   adaptive_icon_monochrome: "assets/icon/logo_android_mono.png"
+  ios: true
+  image_path_ios: "assets/icon/logo_ios.png"
   web:
     generate: true
     background_color: "#1a110f"
