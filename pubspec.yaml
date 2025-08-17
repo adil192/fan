@@ -32,6 +32,9 @@ dependencies:
 
   url_launcher: ^6.3.2
 
+  disable_battery_optimizations_latest: ^1.0.0
+  material_new_shapes: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -129,6 +129,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  disable_battery_optimizations_latest:
+    dependency: "direct main"
+    description:
+      name: disable_battery_optimizations_latest
+      sha256: "49b95d0c083ee96c310ab848a6de4cebec59e60775e6911d43300a7c42ecc14c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -360,6 +368,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.1"
+  material_new_shapes:
+    dependency: "direct main"
+    description:
+      name: material_new_shapes
+      sha256: e4bc375205e187e8fb232573387112dd8c0dd45b03af8aa2b3c79eb4b9e3e0dc
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   material_symbols_icons:
     dependency: "direct main"
     description:
