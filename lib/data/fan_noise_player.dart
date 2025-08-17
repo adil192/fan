@@ -2,25 +2,24 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:fan/data/fan_state.dart';
-import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 
-final fanNoisePlayer = FanNoisePlayer();
+late final FanAudioHandler fanAudioHandler;
 
-@visibleForTesting
-class FanNoisePlayer {
+class FanAudioHandler extends BaseAudioHandler {
+  bool get isLoaded => _isLoaded;
+  bool _isLoaded = false;
+
   late final player = AudioPlayer(useLazyPreparation: false)
     ..setLoopMode(LoopMode.one)
     ..setVolume(0);
   late final Duration duration;
 
-  bool get isLoaded => _isLoaded;
-  bool _isLoaded = false;
-
-  Future<void> init() async {
+  static Future<void> init() async {
     final audioSession = await AudioSession.instance;
     await audioSession.configure(
       const AudioSessionConfiguration(
@@ -38,9 +37,30 @@ class FanNoisePlayer {
     // Use mediakit on all platforms except android
     JustAudioMediaKit.ensureInitialized(macOS: true, iOS: true);
 
-    duration =
-        await player.setAsset('assets/audio/fan_loop.ogg') ??
-        const Duration(seconds: 17);
+    fanAudioHandler = await AudioService.init(
+      builder: () => FanAudioHandler(),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.adilhanney.fan.channel.audio',
+        androidNotificationChannelName: 'Audio playback',
+        androidNotificationOngoing: true,
+        androidStopForegroundOnPause: true,
+      ),
+    );
+    await fanAudioHandler.load();
+  }
+
+  Future<void> load() async {
+    const assetPath = 'assets/audio/fan_loop.ogg';
+    playbackState.add(
+      playbackState.value.copyWith(
+        controls: [MediaControl.play],
+        processingState: AudioProcessingState.loading,
+      ),
+    );
+    duration = await player.setAsset(assetPath) ?? const Duration(seconds: 17);
+    playbackState.add(
+      playbackState.value.copyWith(processingState: AudioProcessingState.ready),
+    );
 
     fanState.addListener(_update);
     fanState.angle.addListener(_update);
@@ -65,13 +85,14 @@ class FanNoisePlayer {
     });
 
     if (fanState.isOn) {
-      _play();
+      play();
     } else {
-      _pause();
+      pause();
     }
   }
 
-  void _play() {
+  @override
+  Future<void> play() async {
     const minVolume = 0.2;
     const maxVolume = 1.0;
     const mostQuietAngle = 0.4 * pi; // ~72°
@@ -84,10 +105,27 @@ class FanNoisePlayer {
     targetVolume = sqrt(targetVolume);
     targetVolume = targetVolume.clamp(minVolume, maxVolume);
     _fadeToVolume(targetVolume);
+
+    playbackState.add(
+      playbackState.value.copyWith(
+        playing: true,
+        controls: [MediaControl.pause],
+      ),
+    );
+    fanState.isOn = true;
   }
 
-  void _pause() {
+  @override
+  Future<void> pause() async {
     _fadeToVolume(0);
+
+    playbackState.add(
+      playbackState.value.copyWith(
+        playing: false,
+        controls: [MediaControl.play],
+      ),
+    );
+    fanState.isOn = false;
   }
 
   Timer? _volumeTimer;

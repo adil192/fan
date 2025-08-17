@@ -23,7 +23,7 @@ Future<void> main() async {
   Stows.enablePersistence();
 
   unawaited(AnimatedFan.loadAssets()); // Start loading assets early
-  await Future.wait([fanNoisePlayer.init(), _loadFanState()]);
+  await Future.wait([FanAudioHandler.init(), _loadFanState()]);
   Oscillator.init();
 
   addAssetLicenses();
