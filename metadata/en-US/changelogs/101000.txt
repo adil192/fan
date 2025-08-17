@@ -1,0 +1,1 @@
+Added background playback (with notification bar controls) and improved the app icon.
