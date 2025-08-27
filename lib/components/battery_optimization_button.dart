@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:disable_battery_optimizations_latest/disable_battery_optimizations_latest.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:material_new_shapes/material_new_shapes.dart';
 
@@ -31,9 +33,11 @@ class _BatteryOptimizationButtonState extends State<BatteryOptimizationButton> {
   }
 
   Future<void> _load() async {
-    _isBatteryOptimizationDisabled =
-        await DisableBatteryOptimizationLatest.isBatteryOptimizationDisabled;
-    if (mounted) setState(() {});
+    if (!kIsWeb && Platform.isAndroid) {
+      _isBatteryOptimizationDisabled =
+          await DisableBatteryOptimizationLatest.isBatteryOptimizationDisabled;
+      if (mounted) setState(() {});
+    }
   }
 
   Future<void> _request() async {
