@@ -14,7 +14,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  flame: ^1.30.0
   flutter_svg: ^2.2.0
 
   audio_service: ^0.18.18
@@ -34,6 +33,7 @@ dependencies:
 
   disable_battery_optimizations_latest: ^1.0.0
   material_new_shapes: ^1.0.0
+  three_js: ^0.2.4
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +48,7 @@ flutter:
   assets:
     - assets/audio/
     - assets/icon/logo_android_mono.svg
-    - assets/images/fan-assets/
+    - assets/fan.glb
 
 # ./scripts/generate-icons.sh
 flutter_launcher_icons:

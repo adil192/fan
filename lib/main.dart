@@ -55,11 +55,7 @@ void addAssetLicenses() {
       '_assets_audio',
     ], await rootBundle.loadString('assets/audio/fan_loop.LICENSE'));
   });
-  LicenseRegistry.addLicense(() async* {
-    yield LicenseEntryWithLineBreaks([
-      '_assets_images',
-    ], await rootBundle.loadString('assets/images/fan-assets/LICENSE.md'));
-  });
+  // TODO: Add 3d model license
 }
 
 Future<void> _loadFanState() async {

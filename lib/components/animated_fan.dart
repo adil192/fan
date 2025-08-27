@@ -1,12 +1,6 @@
-import 'dart:math';
-
 import 'package:fan/data/fan_state.dart';
-import 'package:fan/data/tint_matrix.dart';
-import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
-import 'package:flame/flame.dart';
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:three_js/three_js.dart' as three;
 
 const _gameSize = Size(1219, 1230);
 
@@ -17,160 +11,93 @@ class AnimatedFan extends StatefulWidget {
   State<AnimatedFan> createState() => _AnimatedFanState();
 
   static Future<void> loadAssets() async {
-    await Flame.images.loadAll([
-      for (final frame in _FanSpriteFrame.values) frame.path,
-    ]);
+    // TODO: Preload 3D model
   }
 }
 
 class _AnimatedFanState extends State<AnimatedFan> {
-  late final game = _FanGame();
+  late final threeJs = three.ThreeJS(
+    setup: _setup,
+    onSetupComplete: _onSetupComplete,
+  );
+  _Fan? fan;
+
+  Future<void> _setup() async {
+    threeJs.width = _gameSize.width;
+    threeJs.height = _gameSize.height;
+
+    threeJs.camera = three.PerspectiveCamera(
+      45,
+      threeJs.width / threeJs.height,
+    );
+    threeJs.camera.position.setValues(3, 6, 10);
+
+    threeJs.scene = three.Scene();
+    threeJs.scene.add(threeJs.camera);
+    threeJs.camera.lookAt(threeJs.scene.position);
+
+    final ambientLight = three.AmbientLight();
+    threeJs.scene.add(ambientLight);
+
+    final pointLight = three.PointLight(0xffffff, 0.3);
+    pointLight.position.setValues(0, 0, 0);
+    threeJs.camera.add(pointLight);
+
+    final loader = three.GLTFLoader();
+
+    final fanGlb = await loader.fromAsset('assets/fan.glb');
+    fan = _Fan(fanGlb!.scene, fanGlb.animations!, fanState);
+    threeJs.scene.add(fanGlb.scene..scale.setValues(0.3, 0.3, 0.3));
+
+    threeJs.addAnimationEvent((dt) {
+      fan?.update(dt);
+    });
+  }
+
+  void _onSetupComplete() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    threeJs.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    game.fanColor = ColorScheme.of(context).primary;
+    // game.fanColor = ColorScheme.of(context).primary;
     return IgnorePointer(
       child: FittedBox(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
           width: _gameSize.width,
           height: _gameSize.height,
-          child: GameWidget(game: game),
+          child: threeJs.build(),
         ),
       ),
     );
   }
 }
 
-class _FanGame extends FlameGame {
-  Color get fanColor => _fanColor;
-  Color _fanColor = Colors.black;
-  set fanColor(Color fanColor) {
-    if (_fanColor == fanColor) return;
-    _fanColor = fanColor;
-    _fan.sprite.updateColorFilter(_fanColor);
+class _Fan {
+  _Fan(this.object, this.animations, this.fanState) {
+    mixer = three.AnimationMixer(object);
+
+    final animation = mixer.clipAction(animations[0])!;
+    animation
+      ..enabled = true
+      ..setEffectiveTimeScale(1)
+      ..setEffectiveWeight(1)
+      ..play();
   }
 
-  late final _fan = FanComponent();
-
-  @override
-  Future<void> onLoad() async {
-    add(_fan);
-  }
-
-  @override
-  Color backgroundColor() => Colors.transparent;
-}
-
-@visibleForTesting
-class FanComponent extends PositionComponent {
-  FanComponent()
-    : super(
-        size: _gameSize.toVector2(),
-        anchor: const Anchor(0.5, 0.8),
-        position: Vector2(_gameSize.width * 0.5, _gameSize.height * 0.8),
-      ) {
-    add(sprite);
-  }
-
-  late final sprite = _FanSprite(fanState);
-
-  @override
-  void update(double dt) {
-    angle = fanState.angle.value;
-    super.update(dt);
-  }
-}
-
-class _FanSprite extends SpriteAnimationGroupComponent<_FanSpriteAnimation>
-    with HasGameReference<_FanGame> {
-  _FanSprite(this.fanState)
-    : super(
-        current: _FanSpriteAnimation.off,
-        size: Vector2(_gameSize.height, _gameSize.width), // swapped bc rotated
-        paint: Paint()..filterQuality = FilterQuality.medium,
-        angle: pi / 2, // face up
-        anchor: Anchor.center,
-        position: Vector2(_gameSize.height / 2, _gameSize.width / 2),
-      );
-
+  final three.Object3D object;
+  final List animations;
   final FanState fanState;
+  late final three.AnimationMixer mixer;
 
-  @override
-  Future<void> onLoad() async {
-    final fanOnSpriteList = await Future.wait([
-      Sprite.load(_FanSpriteFrame.fanOn1.path),
-      Sprite.load(_FanSpriteFrame.fanOn2.path),
-      Sprite.load(_FanSpriteFrame.fanOn3.path),
-      Sprite.load(_FanSpriteFrame.fanOn4.path),
-      Sprite.load(_FanSpriteFrame.fanOn5.path),
-      Sprite.load(_FanSpriteFrame.fanOn6.path),
-    ]);
-    final fanOffSpriteList = await Future.wait([
-      Sprite.load(_FanSpriteFrame.fanOff.path),
-    ]);
-
-    animations = {
-      _FanSpriteAnimation.off: SpriteAnimation.spriteList(
-        fanOffSpriteList,
-        stepTime: 1 / 10,
-      ),
-      _FanSpriteAnimation.low: SpriteAnimation.spriteList(
-        fanOnSpriteList,
-        stepTime: 1 / 5,
-      ),
-      _FanSpriteAnimation.medium: SpriteAnimation.spriteList(
-        fanOnSpriteList,
-        stepTime: 1 / 10,
-      ),
-      _FanSpriteAnimation.high: SpriteAnimation.spriteList(
-        fanOnSpriteList,
-        stepTime: 1 / 20,
-      ),
-    };
-
-    updateColorFilter(game.fanColor);
-  }
-
-  @override
   void update(double dt) {
-    _updateCurrentAnimation();
-    super.update(dt);
+    mixer.update(dt);
   }
-
-  void _updateCurrentAnimation() {
-    final _FanSpriteAnimation animation;
-    if (!fanState.isOn) {
-      animation = _FanSpriteAnimation.off;
-    } else {
-      animation = switch (fanState.speed) {
-        FanSpeed.low => _FanSpriteAnimation.low,
-        FanSpeed.medium => _FanSpriteAnimation.medium,
-        FanSpeed.high => _FanSpriteAnimation.high,
-      };
-    }
-
-    if (current != animation) {
-      current = animation;
-    }
-  }
-
-  void updateColorFilter(Color fanColor) {
-    paint.colorFilter = ColorFilter.matrix(getTintMatrix(fanColor));
-  }
-}
-
-enum _FanSpriteAnimation { off, low, medium, high }
-
-enum _FanSpriteFrame {
-  fanOn1('fan-assets/fan_head_no_cover_01.png'),
-  fanOn2('fan-assets/fan_head_no_cover_02.png'),
-  fanOn3('fan-assets/fan_head_no_cover_03.png'),
-  fanOn4('fan-assets/fan_head_no_cover_04.png'),
-  fanOn5('fan-assets/fan_head_no_cover_05.png'),
-  fanOn6('fan-assets/fan_head_no_cover_06.png'),
-  fanOff('fan-assets/fan_head_no_cover_off.png');
-
-  const _FanSpriteFrame(this.path);
-  final String path;
 }

@@ -1,4 +1,3 @@
-import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 /// Tints the fan with the given color.
@@ -14,7 +13,7 @@ List<double> getTintMatrix(Color tint) {
   g += brightenFactor;
   b += brightenFactor;
 
-  final greyscale = Vector3(0.2126, 0.7152, 0.0722);
+  const greyscale = (r: 0.2126, g: 0.7152, b: 0.0722);
   const bias = 255 * 0.2;
   return _concatenate([
     [greyscale.r * r, greyscale.g * r, greyscale.b * r, 0, tint.r * bias],
