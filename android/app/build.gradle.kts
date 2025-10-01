@@ -40,19 +40,27 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
             storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-            storePassword = keystoreProperties["storePassword"] as String
+            storePassword = keystoreProperties["storePassword"] as String?
         }
     }
 
     buildTypes {
+        val chosenSigningConfig: com.android.build.gradle.internal.dsl.SigningConfig
+        if (keystorePropertiesFile.exists()) {
+            chosenSigningConfig = signingConfigs.getByName("release")
+        } else {
+            println("WARNING: Signing with debug keys as key.properties file is missing.")
+            chosenSigningConfig = signingConfigs.getByName("debug")
+        }
+
         debug {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = chosenSigningConfig
         }
         release {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = chosenSigningConfig
         }
     }
 }
