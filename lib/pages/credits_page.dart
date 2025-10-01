@@ -61,11 +61,14 @@ class CreditsPage extends StatelessWidget {
             onTap: () => showLicensePage(
               context: context,
               applicationName: 'Just Fan Noise',
-              applicationIcon: SvgPicture.asset(
-                'assets/icon/logo_android_mono.svg',
-                colorFilter: ColorFilter.mode(
-                  ColorScheme.of(context).onSurface,
-                  BlendMode.srcIn,
+              applicationIcon: Padding(
+                padding: const EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  'assets/icon/logo_android_mono.svg',
+                  colorFilter: ColorFilter.mode(
+                    ColorScheme.of(context).onSurface,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               applicationLegalese:
