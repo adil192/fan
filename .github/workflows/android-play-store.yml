@@ -109,8 +109,8 @@ jobs:
 
           mkdir -p whatsnew
 
-          # get current version code from lib/data/version.dart
-          VERSION_CODE=$(grep -oP '(?<=buildNumber = )\d+' lib/data/version.dart)
+          # get current version code from pubspec.yaml
+          VERSION_CODE=$(grep 'version: ' pubspec.yaml | sed 's/.*+//')
 
           # copy changelogs of each language to whatsnew
           for dir in metadata/*/changelogs; do
