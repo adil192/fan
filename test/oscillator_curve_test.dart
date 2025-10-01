@@ -36,7 +36,7 @@ void main() {
       await tester.pumpWidget(
         ScreenshotApp(
           device: device,
-          child: CustomPaint(
+          home: CustomPaint(
             painter: _ChartPainter(),
             child: const SizedBox.expand(),
           ),

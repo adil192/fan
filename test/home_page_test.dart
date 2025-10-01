@@ -61,7 +61,7 @@ class _HomeApp extends StatelessWidget {
     return ScreenshotApp(
       device: GoldenScreenshotDevices.android.device,
       theme: ThemedApp.getTheme(stows.accentColor.value),
-      child: const HomePage(),
+      home: const HomePage(),
     );
   }
 }

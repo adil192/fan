@@ -16,7 +16,7 @@ class Stows {
   final accentColor = PlainStow(
     'accent',
     Accent.red.color,
-    codec: ColorCodec(),
+    codec: const ColorCodec(),
     volatile: volatile,
   );
 

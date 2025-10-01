@@ -57,7 +57,7 @@ class _CreditsApp extends StatelessWidget {
     return ScreenshotApp(
       device: GoldenScreenshotDevices.android.device,
       theme: ThemedApp.getTheme(Accent.values.first.color),
-      child: const CreditsPage(),
+      home: const CreditsPage(),
     );
   }
 }
