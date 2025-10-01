@@ -19,6 +19,7 @@ class _AnimatedFanState extends State<AnimatedFan> {
   late final threeJs = three.ThreeJS(
     setup: _setup,
     onSetupComplete: _onSetupComplete,
+    size: _gameSize,
   );
   _Fan? fan;
 
