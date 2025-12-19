@@ -67,9 +67,8 @@ void screenshot({
 
         await runApp(tester, device);
 
-        await tester.precacheImagesInWidgetTree();
         await tester.runAsync(AnimatedFan.loadAssets);
-        await tester.loadFonts();
+        await tester.loadAssets();
 
         final app = tester.widget(find.byType(ScreenshotApp));
         await tester.pumpFrames(app, const Duration(seconds: 1));

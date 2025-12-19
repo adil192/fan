@@ -37,8 +37,7 @@ void main() {
               await tester.tap(find.byKey(const Key('settings_button')));
             }
 
-            await tester.loadFonts();
-            await tester.precacheTopbarImages();
+            await tester.loadAssets();
             await tester.runAsync(AnimatedFan.loadAssets);
             await tester.pumpFrames(widget, const Duration(seconds: 1));
 
@@ -59,7 +58,7 @@ class _HomeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenshotApp(
-      device: GoldenScreenshotDevices.android.device,
+      device: GoldenScreenshotDevices.androidPhone.device,
       theme: ThemedApp.getTheme(stows.accentColor.value),
       home: const HomePage(),
     );

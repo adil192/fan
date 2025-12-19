@@ -13,8 +13,7 @@ void main() {
       final widget = _CreditsApp();
       await tester.pumpWidget(widget);
 
-      await tester.loadFonts();
-      await tester.precacheTopbarImages();
+      await tester.loadAssets();
       await tester.pumpFrames(widget, const Duration(seconds: 1));
 
       await expectLater(
@@ -39,8 +38,7 @@ void main() {
 
       await tester.tap(find.text('View all licenses'));
 
-      await tester.loadFonts();
-      await tester.precacheTopbarImages();
+      await tester.loadAssets();
       await tester.pumpFrames(widget, const Duration(seconds: 1));
 
       await expectLater(
@@ -55,7 +53,7 @@ class _CreditsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenshotApp(
-      device: GoldenScreenshotDevices.android.device,
+      device: GoldenScreenshotDevices.androidPhone.device,
       theme: ThemedApp.getTheme(Accent.values.first.color),
       home: const CreditsPage(),
     );
