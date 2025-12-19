@@ -37,6 +37,9 @@ jobs:
           path: |
             .dart_tool/
             build/
+            linux/flutter/ephemeral/
+            macos/Flutter/ephemeral/
+            windows/flutter/ephemeral/
             .flutter-plugins-dependencies
             pubspec.lock
           key: ${{ runner.OS }}-fan-${{ hashFiles('**/pubspec.lock') }}

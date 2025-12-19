@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .dart_tool/
+            build/
+            linux/flutter/ephemeral/
+            macos/Flutter/ephemeral/
+            windows/flutter/ephemeral/
+            .flutter-plugins-dependencies
+            pubspec.lock
+          key: ${{ runner.OS }}-fan-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-fan-
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:'
+      - name: Disable Flutter CLI animations
+        run: flutter config --no-cli-animations
+
+      - run: flutter pub get
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Upload coverage reports to Codecov
+        if: ${{ matrix.patch == 'regular' }}
+        uses: codecov/codecov-action@v3
+        with:
+          files: coverage/lcov.info
