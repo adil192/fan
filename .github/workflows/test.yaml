@@ -12,6 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Checkout assets
+        uses: actions/checkout@v4
+        with:
+          repository: adil192/fan-assets
+          path: assets/images/fan-assets
+          token: ${{ secrets.FAN_ASSETS_TOKEN}}
+      - name: Print assets directory contents
+        run: tree assets
+
       - name: Setup cache
         uses: actions/cache@v4
         with:
