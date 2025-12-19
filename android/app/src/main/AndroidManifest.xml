@@ -1,11 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <!-- Remove network permission from dependencies -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove"/>
-
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
+    <!-- Remove unused permissions added by dependencies -->
+    <uses-permission tools:node="remove" android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission tools:node="remove" android:name="android.permission.INTERNET"/>
 
     <application
         android:label="Just Fan Noise"
