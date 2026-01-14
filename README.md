@@ -19,9 +19,9 @@ A fan noise app built with Flutter.
 2. Install the app's build dependencies with one of the following:
    ```bash
    # For Ubuntu and Debian-based distros
-   sudo apt install libmpv-dev
+   sudo apt install libasound2-dev
    # For Fedora and RHEL-based distros
-   sudo dnf install mpv-devel
+   sudo dnf install alsa-lib-devel
    ```
 
 

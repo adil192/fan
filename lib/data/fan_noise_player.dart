@@ -5,19 +5,18 @@ import 'dart:ui';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:fan/data/fan_state.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_media_kit/just_audio_media_kit.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 
 late final FanAudioHandler fanAudioHandler;
 
 class FanAudioHandler extends BaseAudioHandler {
-  bool get isLoaded => _isLoaded;
-  bool _isLoaded = false;
+  static final _soLoud = SoLoud.instance;
+  static final _soLoudInitFuture = _soLoud.init(channels: .mono);
+  static FutureOr<AudioSource> _fanLoopAudioSource = _soLoud.loadAsset(
+    'assets/audio/fan_loop.wav',
+  );
 
-  late final player = AudioPlayer(useLazyPreparation: false)
-    ..setLoopMode(LoopMode.one)
-    ..setVolume(0);
-  late final Duration duration;
+  SoundHandle? _fanLoopSoundHandle;
 
   static Future<void> init() async {
     final audioSession = await AudioSession.instance;
@@ -34,9 +33,6 @@ class FanAudioHandler extends BaseAudioHandler {
       ),
     );
 
-    // Use mediakit on all platforms except android
-    JustAudioMediaKit.ensureInitialized(macOS: true, iOS: true);
-
     fanAudioHandler = await AudioService.init(
       builder: () => FanAudioHandler(),
       config: const AudioServiceConfig(
@@ -50,34 +46,33 @@ class FanAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> load() async {
-    const assetPath = 'assets/audio/fan_loop.ogg';
     playbackState.add(
       playbackState.value.copyWith(
         controls: [MediaControl.play],
         processingState: AudioProcessingState.loading,
       ),
     );
-    duration = await player.setAsset(assetPath) ?? const Duration(seconds: 17);
+
+    await _soLoudInitFuture;
+    _fanLoopSoundHandle ??= await _soLoud.play(
+      _fanLoopAudioSource = await _fanLoopAudioSource,
+      volume: 0,
+      paused: true,
+      looping: true,
+    );
+
     playbackState.add(
       playbackState.value.copyWith(processingState: AudioProcessingState.ready),
     );
 
     fanState.addListener(_update);
     fanState.angle.addListener(_update);
-
-    _isLoaded = true;
   }
 
   void _update() {
-    if (!isLoaded) return;
+    if (_fanLoopSoundHandle == null) return;
 
-    player.setPitch(switch (fanState) {
-      FanState(isOn: false) => 0.8,
-      FanState(speed: FanSpeed.low) => 0.9,
-      FanState(speed: FanSpeed.medium) => 1.0,
-      FanState(speed: FanSpeed.high) => 1.1,
-    });
-    player.setSpeed(switch (fanState) {
+    _soLoud.setRelativePlaySpeed(_fanLoopSoundHandle!, switch (fanState) {
       FanState(isOn: false) => 0.8,
       FanState(speed: FanSpeed.low) => 0.8,
       FanState(speed: FanSpeed.medium) => 1.0,
@@ -141,20 +136,19 @@ class FanAudioHandler extends BaseAudioHandler {
       targetVolume >= 0.0 && targetVolume <= 1.0,
       'targetVolume must be between 0.0 and 1.0, got $targetVolume',
     );
-    assert(isLoaded, 'Player must be loaded before fading volume');
-    if (player.volume == targetVolume) return;
+    assert(
+      _fanLoopSoundHandle != null,
+      'Player must be loaded before fading volume',
+    );
 
     void finalize() {
       _volumeTimer?.cancel();
-      player.setVolume(targetVolume);
-      if (targetVolume <= 0) {
-        player.pause();
-      } else {
-        player.play();
-      }
+      _soLoud.setVolume(_fanLoopSoundHandle!, targetVolume);
+      _soLoud.setPause(_fanLoopSoundHandle!, targetVolume <= 0);
     }
 
-    final diffVolumeAbs = (targetVolume - player.volume).abs();
+    var currentVolume = _soLoud.getVolume(_fanLoopSoundHandle!);
+    final diffVolumeAbs = (targetVolume - currentVolume).abs();
     final steps = (diffVolumeAbs * maxSteps).floor();
     if (steps < 2) {
       // If the difference is small enough, just set the volume directly.
@@ -162,20 +156,20 @@ class FanAudioHandler extends BaseAudioHandler {
       return;
     }
     final duration = maxTime * diffVolumeAbs;
-    final increment = (targetVolume - player.volume) / steps;
+    final increment = (targetVolume - currentVolume) / steps;
 
     _volumeTimer?.cancel();
     _volumeTimer = Timer.periodic(duration ~/ steps, (_) {
-      final newVolume = player.volume + increment;
-      if ((increment > 0 && newVolume >= targetVolume) ||
-          (increment < 0 && newVolume <= targetVolume)) {
+      currentVolume = currentVolume + increment;
+      if ((increment > 0 && currentVolume >= targetVolume) ||
+          (increment < 0 && currentVolume <= targetVolume)) {
         finalize();
       } else {
-        player.setVolume(newVolume);
-        player.play();
+        _soLoud.setVolume(_fanLoopSoundHandle!, currentVolume);
+        _soLoud.setPause(_fanLoopSoundHandle!, false);
       }
     });
 
-    player.play();
+    _soLoud.setPause(_fanLoopSoundHandle!, false);
   }
 }

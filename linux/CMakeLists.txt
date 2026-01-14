@@ -16,6 +16,9 @@ cmake_policy(SET CMP0063 NEW)
 # Load bundled libraries from the lib/ directory relative to the binary.
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
+# Disable OGG codec binaries from flutter_soloud
+set(ENV{NO_OPUS_OGG_LIBS} 1)
+
 # Root filesystem for cross-building.
 if(FLUTTER_TARGET_PLATFORM_SYSROOT)
   set(CMAKE_SYSROOT ${FLUTTER_TARGET_PLATFORM_SYSROOT})
@@ -73,9 +76,6 @@ set_target_properties(${BINARY_NAME}
 # Generated plugin build rules, which manage building the plugins and adding
 # them to the application.
 include(flutter/generated_plugins.cmake)
-
-# https://pub.dev/packages/just_audio_media_kit
-target_link_libraries(${BINARY_NAME} PRIVATE ${MIMALLOC_LIB})
 
 # === Installation ===
 # By default, "installing" just makes a relocatable bundle in the build
