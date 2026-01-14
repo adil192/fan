@@ -13,7 +13,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
   flame: ^1.30.0
   flutter_soloud: ^3.4.8
   flutter_svg: ^2.2.0
