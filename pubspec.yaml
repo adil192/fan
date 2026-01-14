@@ -45,7 +45,14 @@ flutter:
   assets:
     - assets/audio/
     - assets/icon/logo_android_mono.svg
-    - assets/images/fan-assets/
+    - assets/images/fan-assets/LICENSE.md
+    - assets/images/fan-assets/fan_head_no_cover_01.png
+    - assets/images/fan-assets/fan_head_no_cover_02.png
+    - assets/images/fan-assets/fan_head_no_cover_03.png
+    - assets/images/fan-assets/fan_head_no_cover_04.png
+    - assets/images/fan-assets/fan_head_no_cover_05.png
+    - assets/images/fan-assets/fan_head_no_cover_06.png
+    - assets/images/fan-assets/fan_head_no_cover_off.png
 
 # ./scripts/generate-icons.sh
 flutter_launcher_icons:
