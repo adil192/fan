@@ -10,10 +10,10 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Checkout assets
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: adil192/fan-assets
           path: assets/images/fan-assets
@@ -22,7 +22,7 @@ jobs:
         run: tree assets
 
       - name: Setup cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             .dart_tool/
@@ -31,24 +31,21 @@ jobs:
             macos/Flutter/ephemeral/
             windows/flutter/ephemeral/
             .flutter-plugins-dependencies
-            pubspec.lock
           key: ${{ runner.OS }}-fan-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.OS }}-fan-
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: adil192/setup-flutter-submodule@v1
         with:
-          channel: stable
-          cache: true
-          cache-key: 'flutter-:os:-:channel:-:version:-:arch:'
+          flutter-path: submodules/flutter
       - name: Disable Flutter CLI animations
         run: flutter config --no-cli-animations
 
       - run: flutter pub get
 
       - name: Run tests
-        run: flutter test --coverage
+        run: flutter test --no-pub --coverage
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
