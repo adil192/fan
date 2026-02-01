@@ -89,14 +89,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  chalkdart:
-    dependency: transitive
-    description:
-      name: chalkdart
-      sha256: "7ffc6bd39c81453fb9ba8dbce042a9c960219b75ea1c07196a7fa41c2fab9e86"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.5"
   characters:
     dependency: transitive
     description:
@@ -234,10 +226,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_soloud
-      sha256: "5d0277ab9e7516cc9c0558f739c158b638bb11ad2f4388a743d35eb3baf54b1c"
+      sha256: eaabeac993173aa06b58c720803bff67337f9913ea6c5ce701e0e186724f4b0f
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.8"
+    version: "3.4.9"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -256,22 +248,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  glob:
-    dependency: transitive
-    description:
-      name: glob
-      sha256: c3f1ee72c96f8f78935e18aa8cecced9ab132419e8625dc187e1c2408efc20de
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.3"
   golden_screenshot:
     dependency: "direct dev"
     description:
       name: golden_screenshot
-      sha256: "2f7807322939ea921c593376c3d5f7c7b4b72e6c7bd8df927caff2b0d5f1d19a"
+      sha256: "10716886073feaae43d1fb4f4af45aece147717d99cb8065a6052f8c306ec7e7"
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.2"
+    version: "10.0.0"
   gsettings:
     dependency: transitive
     description:
@@ -396,10 +380,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: "02555a48e1ec02b16e532dfd4ef13c4f6bf7ec7c20230e58e56641a393433dc3"
+      sha256: c62b15f2b3de98d72cbff0148812f5ef5159f05e61fc9f9a089ec2bb234df082
       url: "https://pub.dev"
     source: hosted
-    version: "4.2892.0"
+    version: "4.2906.0"
   matrix4_transform:
     dependency: transitive
     description:
@@ -705,10 +689,10 @@ packages:
     dependency: transitive
     description:
       name: stow
-      sha256: "4b8dbb36bb4fdbd47e9c3d3ce434e32dd91c98dd1ed469c769d5ebeb90949948"
+      sha256: b918efab4a9d81efb8b5ff55a8b0ed60e9f7fcb6f6b88909fbebb47881830edb
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1+1"
+    version: "0.6.0"
   stow_codecs:
     dependency: "direct main"
     description:
@@ -721,10 +705,10 @@ packages:
     dependency: "direct main"
     description:
       name: stow_plain
-      sha256: a463db00b22d5793cd9afb1137ca54783a29aca1a12242d5760b0a101cb71f41
+      sha256: d2bd4d7138f23feab8eeab79a16551f641459a28db7ec0924eb4f944a7261d69
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "0.6.0"
   stream_channel:
     dependency: transitive
     description:
@@ -975,4 +959,4 @@ packages:
     version: "0.0.4"
 sdks:
   dart: ">=3.10.0 <4.0.0"
-  flutter: ">=3.38.0 <4.0.0"
+  flutter: ">=3.38.0"
