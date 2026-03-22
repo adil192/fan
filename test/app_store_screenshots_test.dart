@@ -19,7 +19,12 @@ void main() {
       name: '1_home',
       runApp: (tester, device) async {
         await tester.pumpWidget(
-          ScreenshotApp(device: device, theme: theme, home: const HomePage()),
+          ScreenshotApp.withConditionalTitlebar(
+            device: device,
+            theme: theme,
+            title: 'Just Fan Noise',
+            home: const HomePage(),
+          ),
         );
       },
     );
@@ -28,7 +33,12 @@ void main() {
       name: '2_settings',
       runApp: (tester, device) async {
         await tester.pumpWidget(
-          ScreenshotApp(device: device, theme: theme, home: const HomePage()),
+          ScreenshotApp.withConditionalTitlebar(
+            device: device,
+            theme: theme,
+            title: 'Just Fan Noise',
+            home: const HomePage(),
+          ),
         );
         await tester.tap(find.byKey(const Key('settings_button')));
       },
@@ -38,9 +48,10 @@ void main() {
       name: '3_credits',
       runApp: (tester, device) async {
         await tester.pumpWidget(
-          ScreenshotApp(
+          ScreenshotApp.withConditionalTitlebar(
             device: device,
             theme: theme,
+            title: 'Just Fan Noise',
             home: const CreditsPage(),
           ),
         );

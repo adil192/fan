@@ -7,8 +7,8 @@ publish_to: "none"
 version: 1.2.0+102000
 
 environment:
-  sdk: ^3.10.0
-  flutter: ^3.38.0
+  sdk: ^3.11.0
+  flutter: ^3.41.0
 
 dependencies:
   flutter:
@@ -36,7 +36,7 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
-  golden_screenshot: ^10.0.0
+  golden_screenshot: ^11.0.1
 
 flutter:
   uses-material-design: true

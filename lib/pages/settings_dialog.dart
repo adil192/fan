@@ -72,7 +72,7 @@ class _SettingsSubtitle extends StatelessWidget {
       child: Row(
         children: [
           Expanded(child: Text(text, style: TextTheme.of(context).titleMedium)),
-          if (trailing != null) trailing!,
+          ?trailing,
         ],
       ),
     );
