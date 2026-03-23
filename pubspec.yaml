@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   flame: ^1.30.0
-  flutter_soloud: ^3.4.8
+  flutter_soloud: ^3.5.4
   flutter_svg: ^2.2.0
 
   audio_service: ^0.18.18
