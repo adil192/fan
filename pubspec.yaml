@@ -20,11 +20,11 @@ dependencies:
   audio_service: ^0.18.18
   audio_session: ^0.2.2
 
-  material_symbols_icons: ^4.2815.1
+  material_symbols_icons: ^4.2928.1
 
   stow_plain: ^0.6.0
   stow_codecs: ^1.2.0+1
-  shared_preferences: ^2.5.3
+  shared_preferences: ^2.5.5
 
   url_launcher: ^6.3.2
 
