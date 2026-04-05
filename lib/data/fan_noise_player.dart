@@ -54,7 +54,7 @@ class FanAudioHandler extends BaseAudioHandler {
     );
 
     await _soLoudInitFuture;
-    _fanLoopSoundHandle ??= await _soLoud.play(
+    _fanLoopSoundHandle ??= _soLoud.play(
       _fanLoopAudioSource = await _fanLoopAudioSource,
       volume: 0,
       paused: true,
