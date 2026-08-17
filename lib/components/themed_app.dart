@@ -19,7 +19,7 @@ class const ThemedApp({
       title: title,
       theme: theme,
       darkTheme: theme,
-      themeMode: ThemeMode.dark,
+      themeMode: .dark,
       initialRoute: initialRoute,
       routes: routes,
       debugShowCheckedModeBanner: false,
@@ -28,10 +28,15 @@ class const ThemedApp({
 
   /// Creates a [ThemeData] from an [accent] color.
   static ThemeData getTheme(Color accent) {
-    return ThemeData.from(
-      colorScheme: ColorScheme.fromSeed(
-        brightness: Brightness.dark,
-        seedColor: accent,
+    final colorScheme = ColorScheme.fromSeed(
+      brightness: .dark,
+      seedColor: accent,
+    );
+    final theme = ThemeData.from(colorScheme: colorScheme);
+    return theme.copyWith(
+      sliderTheme: theme.sliderTheme.copyWith(
+        year2023: false,
+        inactiveTrackColor: colorScheme.primary.withValues(alpha: 0.24),
       ),
     );
   }
