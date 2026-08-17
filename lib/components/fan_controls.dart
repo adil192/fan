@@ -1,4 +1,5 @@
 import 'package:fan/data/fan_state.dart';
+import 'package:fan/data/stows.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
@@ -19,11 +20,9 @@ class const _TimerBar() extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // Fake data while I build the UI
-    final timerTotal = useState(const Duration(hours: 4));
+    final timerTotal = useListenable(stows.sleepTimerDuration);
     final timerRemaining = useState(const Duration(hours: 3, minutes: 30));
-    final timerActive =
-        timerTotal.value > Duration.zero &&
-        timerRemaining.value > Duration.zero;
+    final timerActive = timerRemaining.value > Duration.zero;
 
     final expansibleController = useExpansibleController();
 
@@ -59,10 +58,12 @@ class const _TimerBar() extends HookWidget {
                     } else if (expansibleController.isExpanded) {
                       return Center(
                         key: const ValueKey('timerTotalDuration'),
-                        child: Text(
-                          formatDuration(timerTotal.value),
-                          style: const TextStyle(fontStyle: .italic),
-                        ),
+                        child: timerTotal.value == Duration.zero
+                            ? const Text('Timer disabled')
+                            : Text(
+                                formatDuration(timerTotal.value),
+                                style: const TextStyle(fontStyle: .italic),
+                              ),
                       );
                     } else {
                       return const Center(
@@ -83,9 +84,9 @@ class const _TimerBar() extends HookWidget {
                         value:
                             timerTotal.value.inMicroseconds /
                             Duration.microsecondsPerHour,
-                        min: 1,
+                        min: 0,
                         max: 8,
-                        divisions: 7,
+                        divisions: 8,
                         padding: const .symmetric(vertical: 2),
                         onChanged: timerActive
                             ? null

@@ -45,4 +45,20 @@ class Stows._() {
     pi / 4,
     volatile: volatile,
   );
+
+  /// The sleep timer duration.
+  /// When the timer finishes, the fan will be turned off.
+  ///
+  /// Set to zero if the user does not want to use the sleep timer feature.
+  /// Conversely, if non-zero, the timer should start when turning on the fan.
+  final sleepTimerDuration = PlainStow(
+    'timerTotal',
+    Duration.zero,
+    volatile: volatile,
+    codec: DelegateCodec<Duration, int>(
+      encode: (duration) =>
+          (duration.inMicroseconds / Duration.microsecondsPerHour).round(),
+      decode: (hours) => Duration(hours: hours),
+    ),
+  );
 }
