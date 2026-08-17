@@ -10,7 +10,6 @@ import 'package:fan/data/stows.dart';
 import 'package:fan/pages/credits_page.dart';
 import 'package:fan/pages/home_page.dart';
 import 'package:fan/pages/settings_dialog.dart';
-import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';

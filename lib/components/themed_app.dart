@@ -1,5 +1,4 @@
 import 'package:fan/data/stows.dart';
-import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ThemedApp extends StatefulWidget {
@@ -50,32 +49,15 @@ class _ThemedAppState extends State<ThemedApp> {
   Widget build(BuildContext context) {
     final theme = ThemedApp.getTheme(stows.accentColor.value);
 
-    switch (Theme.of(context).platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.linux:
-        return Theme(
-          data: theme,
-          child: CupertinoApp(
-            key: _appKey,
-            title: widget.title,
-            theme: MaterialBasedCupertinoThemeData(materialTheme: theme),
-            localizationsDelegates: [DefaultMaterialLocalizations.delegate],
-            initialRoute: widget.initialRoute,
-            routes: widget.routes,
-            debugShowCheckedModeBanner: false,
-          ),
-        );
-      default:
-        return MaterialApp(
-          key: _appKey,
-          title: widget.title,
-          theme: theme,
-          darkTheme: theme,
-          themeMode: ThemeMode.dark,
-          initialRoute: widget.initialRoute,
-          routes: widget.routes,
-          debugShowCheckedModeBanner: false,
-        );
-    }
+    return MaterialApp(
+      key: _appKey,
+      title: widget.title,
+      theme: theme,
+      darkTheme: theme,
+      themeMode: ThemeMode.dark,
+      initialRoute: widget.initialRoute,
+      routes: widget.routes,
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
