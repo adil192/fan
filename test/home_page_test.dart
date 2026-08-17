@@ -6,9 +6,9 @@ import 'package:fan/data/accent_colors.dart';
 import 'package:fan/data/fan_state.dart';
 import 'package:fan/data/stows.dart';
 import 'package:fan/pages/home_page.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

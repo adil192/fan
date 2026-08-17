@@ -3,9 +3,9 @@
 import 'dart:math';
 
 import 'package:fan/data/oscillator.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('Curve', () {

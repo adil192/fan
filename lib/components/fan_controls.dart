@@ -1,6 +1,6 @@
 import 'package:fan/data/fan_state.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FanControls extends StatelessWidget {
   const FanControls({super.key});

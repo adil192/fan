@@ -7,7 +7,7 @@ class FanState extends ChangeNotifier {
   FanState();
 
   bool get isOn => _isOn;
-  bool _isOn = false;
+  var _isOn = false;
   set isOn(bool isOn) {
     if (_isOn == isOn) return;
     _isOn = isOn;
@@ -23,7 +23,7 @@ class FanState extends ChangeNotifier {
   }
 
   bool get oscillate => _oscillate;
-  bool _oscillate = false;
+  var _oscillate = false;
   set oscillate(bool oscillate) {
     if (_oscillate == oscillate) return;
     _oscillate = oscillate;
