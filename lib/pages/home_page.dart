@@ -1,7 +1,7 @@
 import 'package:fan/components/animated_fan.dart';
 import 'package:fan/components/fan_app_bar.dart';
 import 'package:fan/components/fan_controls.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

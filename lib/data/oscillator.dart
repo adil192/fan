@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:fan/data/fan_state.dart';
 import 'package:fan/data/stows.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 abstract class Oscillator {
   static Timer? _timer;

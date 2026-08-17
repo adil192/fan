@@ -2,7 +2,7 @@ import 'package:fan/components/fan_app_bar.dart';
 import 'package:fan/components/oscillation_angle.dart';
 import 'package:fan/components/oscillation_period.dart';
 import 'package:fan/components/theme_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SettingsDialog extends StatelessWidget {
   const SettingsDialog({super.key});

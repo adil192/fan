@@ -1,6 +1,6 @@
 import 'package:fan/components/battery_optimization_button.dart';
 import 'package:fan/pages/settings_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FanAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FanAppBar({super.key});

@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Tints the fan with the given color.
 /// Internally, the fan is greyscaled and then tinted with the color

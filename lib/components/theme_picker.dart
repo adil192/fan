@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:fan/components/themed_app.dart';
 import 'package:fan/data/accent_colors.dart';
 import 'package:fan/data/stows.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ThemePicker extends StatelessWidget {
   const ThemePicker({super.key});

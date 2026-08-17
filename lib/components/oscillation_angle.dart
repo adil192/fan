@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:fan/data/stows.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class OscillationAngleText extends StatelessWidget {
   const OscillationAngleText({super.key});

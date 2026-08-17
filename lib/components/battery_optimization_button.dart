@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:disable_battery_optimizations_latest/disable_battery_optimizations_latest.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:material_new_shapes/material_new_shapes.dart';
 
 class BatteryOptimizationButton extends StatefulWidget {
