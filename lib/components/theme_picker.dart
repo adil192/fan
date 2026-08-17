@@ -7,7 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ThemePicker extends StatelessWidget {
-  const ThemePicker({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +29,8 @@ class ThemePicker extends StatelessWidget {
   }
 }
 
-class ThemePickerButton extends HookWidget {
-  const ThemePickerButton({super.key, required this.accent});
-
-  final Accent accent;
-
+class const ThemePickerButton({super.key, required final Accent accent})
+    extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final theme = useMemoized(() => ThemedApp.getTheme(accent.color), [accent]);

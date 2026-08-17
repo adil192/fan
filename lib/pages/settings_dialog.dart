@@ -4,9 +4,7 @@ import 'package:fan/components/oscillation_period.dart';
 import 'package:fan/components/theme_picker.dart';
 import 'package:material_ui/material_ui.dart';
 
-class SettingsDialog extends StatelessWidget {
-  const SettingsDialog({super.key});
-
+class const SettingsDialog({super.key}) extends StatelessWidget {
   static Future<void> show(BuildContext context) {
     return showDialog(
       context: context,
@@ -60,7 +58,7 @@ class SettingsDialog extends StatelessWidget {
 }
 
 class _SettingsSubtitle extends StatelessWidget {
-  const _SettingsSubtitle(this.text, {this.trailing});
+  const new(this.text, {this.trailing});
 
   final String text;
   final Widget? trailing;

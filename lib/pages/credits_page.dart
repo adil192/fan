@@ -3,9 +3,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CreditsPage extends StatelessWidget {
-  const CreditsPage({super.key});
-
+class const CreditsPage({super.key}) extends StatelessWidget {
   static final appUri = Uri.parse('https://github.com/adil192/fan');
   static final fanAnimationPackUri = Uri.parse(
     'https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?item=146n4f419v416n8q83',
@@ -55,8 +53,7 @@ class CreditsPage extends StatelessWidget {
           _CreditCard(
             icon: Symbols.contract,
             description: 'View all licenses',
-            author:
-                'Full license details including assets and open source packages',
+            author: 'Full license details including assets and open source packages',
             trailing: const Icon(Icons.arrow_forward),
             onTap: () => showLicensePage(
               context: context,
@@ -86,7 +83,7 @@ class CreditsPage extends StatelessWidget {
 }
 
 class _CreditSectionTitle extends StatelessWidget {
-  const _CreditSectionTitle(this.title);
+  const new(this.title);
 
   final String title;
 
@@ -98,7 +95,7 @@ class _CreditSectionTitle extends StatelessWidget {
 }
 
 class _CreditCard extends StatelessWidget {
-  const _CreditCard({
+  const new({
     required this.icon,
     required this.description,
     required this.author,

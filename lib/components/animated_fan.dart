@@ -11,9 +11,7 @@ import 'package:material_ui/material_ui.dart';
 
 const _gameSize = Size(1219, 1230);
 
-class AnimatedFan extends HookWidget {
-  const AnimatedFan({super.key});
-
+class const AnimatedFan({super.key}) extends HookWidget {
   static Future<void> loadAssets() async {
     await Flame.images.loadAll([
       for (final frame in _FanSpriteFrame.values) frame.path,
@@ -59,7 +57,7 @@ class _FanGame extends FlameGame {
 
 @visibleForTesting
 class FanComponent extends PositionComponent {
-  FanComponent()
+  new()
     : super(
         size: _gameSize.toVector2(),
         anchor: const Anchor(0.5, 0.8),
@@ -79,7 +77,7 @@ class FanComponent extends PositionComponent {
 
 class _FanSprite extends SpriteAnimationGroupComponent<_FanSpriteAnimation>
     with HasGameReference<_FanGame> {
-  _FanSprite(this.fanState)
+  new(this.fanState)
     : super(
         current: _FanSpriteAnimation.off,
         size: Vector2(_gameSize.height, _gameSize.width), // swapped bc rotated
@@ -157,7 +155,7 @@ class _FanSprite extends SpriteAnimationGroupComponent<_FanSpriteAnimation>
 
 enum _FanSpriteAnimation { off, low, medium, high }
 
-enum _FanSpriteFrame {
+enum _FanSpriteFrame(final String path) {
   fanOn1('fan-assets/fan_head_no_cover_01.png'),
   fanOn2('fan-assets/fan_head_no_cover_02.png'),
   fanOn3('fan-assets/fan_head_no_cover_03.png'),
@@ -165,7 +163,4 @@ enum _FanSpriteFrame {
   fanOn5('fan-assets/fan_head_no_cover_05.png'),
   fanOn6('fan-assets/fan_head_no_cover_06.png'),
   fanOff('fan-assets/fan_head_no_cover_off.png');
-
-  const _FanSpriteFrame(this.path);
-  final String path;
 }

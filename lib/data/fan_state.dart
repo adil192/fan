@@ -4,7 +4,7 @@ final fanState = FanState();
 
 class FanState extends ChangeNotifier {
   @visibleForTesting
-  FanState();
+  new();
 
   bool get isOn => _isOn;
   var _isOn = false;
@@ -36,7 +36,7 @@ class FanState extends ChangeNotifier {
     return {'speed': speed.index, 'oscillate': oscillate};
   }
 
-  FanState.fromJson(Map<String, dynamic> json)
+  new fromJson(Map<String, dynamic> json)
     : _speed = FanSpeed.values[json['speed'] ?? 0],
       _oscillate = json['oscillate'] ?? false;
 

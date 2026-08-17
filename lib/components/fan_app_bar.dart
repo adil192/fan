@@ -2,9 +2,9 @@ import 'package:fan/components/battery_optimization_button.dart';
 import 'package:fan/pages/settings_dialog.dart';
 import 'package:material_ui/material_ui.dart';
 
-class FanAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const FanAppBar({super.key});
-
+class const FanAppBar({super.key})
+    extends StatelessWidget
+    implements PreferredSizeWidget {
   static const buttonWidth = 72.0;
   static const buttonHeight = 56.0;
   static const buttonMargin = 8.0;

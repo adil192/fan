@@ -3,9 +3,7 @@ import 'package:fan/components/fan_app_bar.dart';
 import 'package:fan/components/fan_controls.dart';
 import 'package:material_ui/material_ui.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+class const HomePage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

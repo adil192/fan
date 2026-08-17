@@ -1,9 +1,7 @@
 import 'package:fan/data/stows.dart';
 import 'package:material_ui/material_ui.dart';
 
-class OscillationPeriodText extends StatelessWidget {
-  const OscillationPeriodText({super.key});
-
+class const OscillationPeriodText({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Exclude semantics as the slider itself has the label
@@ -23,9 +21,7 @@ class OscillationPeriodText extends StatelessWidget {
   }
 }
 
-class OscillationPeriodSlider extends StatelessWidget {
-  const OscillationPeriodSlider({super.key});
-
+class const OscillationPeriodSlider({super.key}) extends StatelessWidget {
   static const minPeriod = 5.0;
   static const maxPeriod = 55.0;
   static const step = 5.0;

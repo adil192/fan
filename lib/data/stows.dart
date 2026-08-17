@@ -7,11 +7,9 @@ import 'package:stow_plain/stow_plain.dart';
 
 final stows = Stows._();
 
-class Stows {
+class Stows._() {
   static var volatile = true;
   static void enablePersistence() => volatile = false;
-
-  Stows._();
 
   final accentColor = PlainStow(
     'accent',

@@ -6,11 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:material_new_shapes/material_new_shapes.dart';
 import 'package:material_ui/material_ui.dart';
 
-class BatteryOptimizationButton extends StatefulWidget {
-  const BatteryOptimizationButton({super.key, required this.style});
-
-  final ButtonStyle style;
-
+class const BatteryOptimizationButton({
+  super.key,
+  required final ButtonStyle style,
+}) extends StatefulWidget {
   @override
   State<BatteryOptimizationButton> createState() =>
       _BatteryOptimizationButtonState();
@@ -78,11 +77,8 @@ class _BatteryOptimizationButtonState extends State<BatteryOptimizationButton> {
   }
 }
 
-class PolygonBorder extends OutlinedBorder {
-  final RoundedPolygon polygon;
-
-  const PolygonBorder({required this.polygon, super.side});
-
+class const PolygonBorder({required final RoundedPolygon polygon, super.side})
+    extends OutlinedBorder {
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     return polygon.toPath().transform(

@@ -2,9 +2,7 @@ import 'package:fan/data/fan_state.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
 
-class FanControls extends StatelessWidget {
-  const FanControls({super.key});
-
+class const FanControls({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -62,19 +60,12 @@ class FanControls extends StatelessWidget {
   }
 }
 
-class _FanControlsButton extends StatelessWidget {
-  const _FanControlsButton({
-    required this.onPressed,
-    this.active = false,
-    this.tooltip,
-    required this.icon,
-  });
-
-  final VoidCallback? onPressed;
-  final bool active;
-  final String? tooltip;
-  final Widget icon;
-
+class const _FanControlsButton({
+  required final VoidCallback? onPressed,
+  final bool active = false,
+  final String? tooltip,
+  required final Widget icon,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(

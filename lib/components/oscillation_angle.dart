@@ -3,9 +3,7 @@ import 'dart:math';
 import 'package:fan/data/stows.dart';
 import 'package:material_ui/material_ui.dart';
 
-class OscillationAngleText extends StatelessWidget {
-  const OscillationAngleText({super.key});
-
+class const OscillationAngleText({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Exclude semantics as the slider itself has the label
@@ -26,9 +24,7 @@ class OscillationAngleText extends StatelessWidget {
   }
 }
 
-class OscillationAngleSlider extends StatelessWidget {
-  const OscillationAngleSlider({super.key});
-
+class const OscillationAngleSlider({super.key}) extends StatelessWidget {
   static const oneDegree = pi / 180; // 1° converted to radians
   static const step = 5 * oneDegree;
   static const minAngle = 5 * oneDegree;
