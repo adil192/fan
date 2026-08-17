@@ -62,9 +62,8 @@ void addAssetLicenses() {
 }
 
 Future<void> _loadFanState() async {
-  await stows.lastFanState.waitUntilRead().then((_) {
-    fanState.copyFrom(stows.lastFanState.value);
-  });
+  await stows.lastFanState.waitUntilRead();
+  fanState.copyFrom(stows.lastFanState.value);
   fanState.addListener(() {
     stows.lastFanState
       ..value = fanState

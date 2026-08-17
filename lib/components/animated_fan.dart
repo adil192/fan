@@ -6,28 +6,23 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_ui/material_ui.dart';
 
 const _gameSize = Size(1219, 1230);
 
-class AnimatedFan extends StatefulWidget {
+class AnimatedFan extends HookWidget {
   const AnimatedFan({super.key});
-
-  @override
-  State<AnimatedFan> createState() => _AnimatedFanState();
 
   static Future<void> loadAssets() async {
     await Flame.images.loadAll([
       for (final frame in _FanSpriteFrame.values) frame.path,
     ]);
   }
-}
-
-class _AnimatedFanState extends State<AnimatedFan> {
-  late final game = _FanGame();
 
   @override
   Widget build(BuildContext context) {
+    final game = useMemoized(_FanGame.new);
     game.fanColor = ColorScheme.of(context).primary;
     return IgnorePointer(
       child: FittedBox(

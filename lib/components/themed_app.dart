@@ -1,7 +1,8 @@
 import 'package:fan/data/stows.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_ui/material_ui.dart';
 
-class ThemedApp extends StatefulWidget {
+class ThemedApp extends HookWidget {
   const ThemedApp({
     super.key,
     required this.title,
@@ -14,50 +15,30 @@ class ThemedApp extends StatefulWidget {
   final Map<String, Widget Function(BuildContext)> routes;
 
   @override
-  State<ThemedApp> createState() => _ThemedAppState();
+  Widget build(BuildContext context) {
+    useListenable(stows.accentColor);
+    final appKey = useMemoized(GlobalKey.new);
 
+    final theme = ThemedApp.getTheme(stows.accentColor.value);
+    return MaterialApp(
+      key: appKey,
+      title: title,
+      theme: theme,
+      darkTheme: theme,
+      themeMode: ThemeMode.dark,
+      initialRoute: initialRoute,
+      routes: routes,
+      debugShowCheckedModeBanner: false,
+    );
+  }
+
+  /// Creates a [ThemeData] from an [accent] color.
   static ThemeData getTheme(Color accent) {
     return ThemeData.from(
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.dark,
         seedColor: accent,
       ),
-    );
-  }
-}
-
-class _ThemedAppState extends State<ThemedApp> {
-  final _appKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    stows.accentColor.addListener(_setState);
-  }
-
-  @override
-  void dispose() {
-    stows.accentColor.removeListener(_setState);
-    super.dispose();
-  }
-
-  void _setState() {
-    if (mounted) setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = ThemedApp.getTheme(stows.accentColor.value);
-
-    return MaterialApp(
-      key: _appKey,
-      title: widget.title,
-      theme: theme,
-      darkTheme: theme,
-      themeMode: ThemeMode.dark,
-      initialRoute: widget.initialRoute,
-      routes: widget.routes,
-      debugShowCheckedModeBanner: false,
     );
   }
 }

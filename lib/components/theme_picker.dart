@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fan/components/themed_app.dart';
 import 'package:fan/data/accent_colors.dart';
 import 'package:fan/data/stows.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ThemePicker extends StatelessWidget {
@@ -28,29 +29,24 @@ class ThemePicker extends StatelessWidget {
   }
 }
 
-class ThemePickerButton extends StatefulWidget {
+class ThemePickerButton extends HookWidget {
   const ThemePickerButton({super.key, required this.accent});
 
   final Accent accent;
 
   @override
-  State<ThemePickerButton> createState() => _ThemePickerButtonState();
-}
-
-class _ThemePickerButtonState extends State<ThemePickerButton> {
-  static const height = 48.0;
-  late final theme = ThemedApp.getTheme(widget.accent.color);
-
-  @override
   Widget build(BuildContext context) {
-    final active = stows.accentColor.value == widget.accent.color;
+    final theme = useMemoized(() => ThemedApp.getTheme(accent.color), [accent]);
+
+    const height = 48.0;
+    final active = stows.accentColor.value == accent.color;
 
     return Theme(
       data: theme,
       child: Tooltip(
-        message: 'Set theme to ${widget.accent.name}',
+        message: 'Set theme to ${accent.name}',
         child: ElevatedButton(
-          onPressed: () => stows.accentColor.value = widget.accent.color,
+          onPressed: () => stows.accentColor.value = accent.color,
           style: ElevatedButton.styleFrom(
             backgroundColor: active
                 ? theme.colorScheme.primary
