@@ -32,7 +32,7 @@ class const OscillationPeriodSlider({super.key}) extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: stows.oscillationPeriod,
       builder: (context, _, _) {
-        return Slider.adaptive(
+        return Slider(
           value: stows.oscillationPeriod.value.toDouble(),
           onChanged: (value) => stows.oscillationPeriod.value = value.toInt(),
           semanticFormatterCallback: (value) => '${value.toInt()} seconds',

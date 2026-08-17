@@ -36,7 +36,7 @@ class const OscillationAngleSlider({super.key}) extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: stows.oscillationAngle,
       builder: (context, _, _) {
-        return Slider.adaptive(
+        return Slider(
           value: stows.oscillationAngle.value,
           onChanged: (value) => stows.oscillationAngle.value = value,
           semanticFormatterCallback: (value) {
