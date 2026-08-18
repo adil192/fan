@@ -114,17 +114,19 @@ class const _TimerBar() extends HookWidget {
                       duration: const Duration(milliseconds: 100),
                       child: IconButton(
                         key: ValueKey(sleepTimer.active),
-                        onPressed: () {
-                          if (sleepTimer.active) {
-                            sleepTimer.cancel();
-                          } else if (!fanState.isOn) {
-                            fanState.isOn = true;
-                            expansibleController.collapse();
-                          } else {
-                            sleepTimer.start();
-                            expansibleController.collapse();
-                          }
-                        },
+                        onPressed: timerTotal.value <= .zero
+                            ? null
+                            : () {
+                                if (sleepTimer.active) {
+                                  sleepTimer.cancel();
+                                } else if (!fanState.isOn) {
+                                  fanState.isOn = true;
+                                  expansibleController.collapse();
+                                } else {
+                                  sleepTimer.start();
+                                  expansibleController.collapse();
+                                }
+                              },
                         tooltip: sleepTimer.active
                             ? 'Cancel timer'
                             : 'Start timer',
