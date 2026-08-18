@@ -1,3 +1,4 @@
+import 'package:fan/data/sleep_timer.dart';
 import 'package:material_ui/material_ui.dart';
 
 final fanState = FanState();
@@ -12,6 +13,12 @@ class FanState extends ChangeNotifier {
     if (_isOn == isOn) return;
     _isOn = isOn;
     notifyListeners();
+
+    if (isOn) {
+      sleepTimer.start();
+    } else {
+      sleepTimer.cancel();
+    }
   }
 
   FanSpeed get speed => _speed;
