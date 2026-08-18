@@ -56,9 +56,8 @@ class Stows._() {
     Duration.zero,
     volatile: volatile,
     codec: DelegateCodec<Duration, int>(
-      encode: (duration) =>
-          (duration.inMicroseconds / Duration.microsecondsPerHour).round(),
-      decode: (hours) => Duration(hours: hours),
+      encode: (duration) => duration.inMilliseconds,
+      decode: (ms) => Duration(milliseconds: ms),
     ),
   );
 }
