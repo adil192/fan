@@ -1,4 +1,5 @@
 import 'package:fan/data/fan_state.dart';
+import 'package:fan/data/sleep_timer.dart';
 import 'package:fan/data/stows.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -19,23 +20,36 @@ class const FanControls({super.key}) extends StatelessWidget {
 class const _TimerBar() extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    // Fake data while I build the UI
     final timerTotal = useListenable(stows.sleepTimerDuration);
-    final timerRemaining = useState(const Duration(hours: 3, minutes: 30));
-    final timerActive = timerRemaining.value > Duration.zero;
+    useListenable(sleepTimer);
+    useListenableSelector(fanState, () => fanState.isOn);
 
     final expansibleController = useExpansibleController();
+    useListenableSelector(
+      expansibleController,
+      () => expansibleController.isExpanded,
+    );
+
+    // Use normal bg when expanded to help with contrast.
+    final boldColors = sleepTimer.active && !expansibleController.isExpanded;
 
     final theme = Theme.of(context);
     const height = 48.0;
-    final textStyle = theme.textTheme.bodyLarge!;
+    final textStyle = theme.textTheme.bodyLarge!.copyWith(
+      color: boldColors
+          ? theme.colorScheme.onPrimary
+          : theme.colorScheme.onSecondaryContainer,
+    );
     final verticalPadding =
         (height - textStyle.fontSize! * textStyle.height!) / 2;
 
-    return Container(
-      width: double.infinity,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      width: 480,
       decoration: BoxDecoration(
-        color: theme.colorScheme.secondaryContainer,
+        color: boldColors
+            ? theme.colorScheme.primary
+            : theme.colorScheme.secondaryContainer,
         borderRadius: const .all(.circular(height / 2)),
       ),
       child: DefaultTextStyle(
@@ -50,25 +64,23 @@ class const _TimerBar() extends HookWidget {
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 100),
                   child: () {
-                    if (timerActive) {
+                    if (sleepTimer.active) {
                       return Center(
                         key: const ValueKey('timerRemainingDuration'),
-                        child: Text(formatDuration(timerRemaining.value)),
+                        child: Text(formatDuration(sleepTimer.remaining)),
                       );
-                    } else if (expansibleController.isExpanded) {
-                      return Center(
-                        key: const ValueKey('timerTotalDuration'),
-                        child: timerTotal.value == Duration.zero
-                            ? const Text('Timer disabled')
-                            : Text(
-                                formatDuration(timerTotal.value),
-                                style: const TextStyle(fontStyle: .italic),
-                              ),
+                    } else if (timerTotal.value <= .zero) {
+                      return const Center(
+                        key: ValueKey('timerDisabled'),
+                        child: Text('Timer disabled'),
                       );
                     } else {
-                      return const Center(
-                        key: ValueKey('timerInactive'),
-                        child: Text('Timer inactive'),
+                      return Center(
+                        key: const ValueKey('timerTotalDuration'),
+                        child: Text(
+                          formatDuration(timerTotal.value),
+                          style: const TextStyle(fontStyle: .italic),
+                        ),
                       );
                     }
                   }(),
@@ -88,7 +100,7 @@ class const _TimerBar() extends HookWidget {
                         max: 8,
                         divisions: 8,
                         padding: const .symmetric(vertical: 2),
-                        onChanged: timerActive
+                        onChanged: sleepTimer.active
                             ? null
                             : (value) {
                                 timerTotal.value = Duration(
@@ -101,17 +113,22 @@ class const _TimerBar() extends HookWidget {
                     AnimatedSwitcher(
                       duration: const Duration(milliseconds: 100),
                       child: IconButton(
-                        key: ValueKey(timerActive),
+                        key: ValueKey(sleepTimer.active),
                         onPressed: () {
-                          if (timerActive) {
-                            // Stop timer
-                            timerRemaining.value = Duration.zero;
+                          if (sleepTimer.active) {
+                            sleepTimer.cancel();
+                          } else if (!fanState.isOn) {
+                            fanState.isOn = true;
+                            expansibleController.collapse();
                           } else {
-                            // Start timer
-                            timerRemaining.value = timerTotal.value * 0.7;
+                            sleepTimer.start();
+                            expansibleController.collapse();
                           }
                         },
-                        icon: timerActive
+                        tooltip: sleepTimer.active
+                            ? 'Cancel timer'
+                            : 'Start timer',
+                        icon: sleepTimer.active
                             ? const Icon(Icons.stop)
                             : const Icon(Icons.play_arrow),
                       ),

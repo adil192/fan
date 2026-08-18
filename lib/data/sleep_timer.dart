@@ -7,8 +7,10 @@ import 'package:flutter/widgets.dart';
 final sleepTimer = SleepTimer._();
 
 class SleepTimer._() extends ChangeNotifier {
-  /// A periodic timer that executes every minute.
-  Timer? _minuteTimer;
+  /// A periodic timer that calls [_onTick].
+  Timer? _timer;
+  bool get active => _timer?.isActive ?? false;
+  static const _timerInterval = Duration(minutes: 1);
 
   /// When this timer was [start]ed, in UTC time.
   var _startTime = DateTime(1970);
@@ -24,16 +26,23 @@ class SleepTimer._() extends ChangeNotifier {
 
   /// Starts the sleep timer. Does not start the fan.
   void start() {
-    _startTime = DateTime.timestamp();
+    if (stows.sleepTimerDuration.value <= .zero) return;
+    if (!fanState.isOn) return;
 
-    _minuteTimer?.cancel();
-    _minuteTimer = Timer.periodic(const Duration(minutes: 1), (_) => _onTick());
+    _startTime = DateTime.timestamp();
+    _remaining = stows.sleepTimerDuration.value;
+
+    _timer?.cancel();
+    _timer = Timer.periodic(_timerInterval, (_) => _onTick());
+
+    notifyListeners();
   }
 
   /// Stops the sleep timer. Does not stop the fan.
   void cancel() {
-    remaining = .zero;
-    _minuteTimer?.cancel();
+    _remaining = .zero;
+    _timer?.cancel();
+    notifyListeners();
   }
 
   /// Updates [remaining] and stops the fan at the end.
@@ -42,6 +51,7 @@ class SleepTimer._() extends ChangeNotifier {
 
     final now = DateTime.timestamp();
     final elapsed = now.difference(_startTime);
+    assert(elapsed >= .zero);
     final remaining = stows.sleepTimerDuration.value - elapsed;
 
     if (remaining <= .zero) {
