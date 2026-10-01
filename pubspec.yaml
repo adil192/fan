@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^1.30.0
+  flame: ^1.38.2
   flutter_soloud: ^4.0.0
   flutter_svg: ^2.2.0
 
@@ -40,7 +40,7 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
-  golden_screenshot: ^12.0.0
+  golden_screenshot: ^12.1.0
 
 flutter:
   uses-material-design: true
