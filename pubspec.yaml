@@ -13,9 +13,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^1.30.0
-  flutter_soloud: ^4.0.0
-  flutter_svg: ^2.2.0
+  flame: ^1.38.2
+  flutter_soloud: ^5.2.2
+  flutter_svg: ^2.3.2
 
   audio_service: ^0.18.18
   audio_session: ^0.2.2
@@ -24,9 +24,9 @@ dependencies:
 
   stow_plain: ^0.6.0
   stow_codecs: ^1.2.0+1
-  shared_preferences: ^2.5.3
+  shared_preferences: ^2.5.6
 
-  url_launcher: ^6.3.2
+  url_launcher: ^6.3.3
 
   disable_battery_optimizations_latest: ^1.0.0
   material_new_shapes: ^1.0.0
@@ -40,7 +40,7 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
-  golden_screenshot: ^12.0.0
+  golden_screenshot: ^12.1.1
 
 flutter:
   uses-material-design: true
